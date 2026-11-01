@@ -15,4 +15,6 @@ Master's project using data from the **Pakistan Social and Living Standards Meas
 | `PSLM_2014-15_...pdf`, `report-13-14_merged*.pdf` | PSLM 2014-15 and 2013-14 reports |
 | `1merged_document*.pdf`, `merged_document*.pdf`, `report_pslm0*.pdf`, `pslms-2004-05.pdf` | Earlier rounds (2004-05 to 2010-11) |
 
+See [DATASET_INFO.md](DATASET_INFO.md) for a full description of the data and what can be done with it.
+
 Source: [Pakistan Bureau of Statistics](https://www.pbs.gov.pk/).
