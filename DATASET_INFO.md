@@ -12,14 +12,31 @@ This repository contains **published report PDFs**, not raw household records. E
 
 ### Files
 
-| Group | Files | Content |
-|---|---|---|
-| **2019-20 district tables** (main dataset) | `Table-*.pdf` (31 distinct tables) | One table per indicator, about 120 districts across Punjab, Sindh, Khyber Pakhtunkhwa and Balochistan |
-| 2019-20 full report | `PSLM_2019_20_District_Level.pdf`, `Key_Finding_Report_...2019-20.pdf` | Full district report and key findings |
-| 2013-14 and 2014-15 | `PSLM_2014-15_...pdf`, `report-13-14_merged.pdf` | National/provincial/district reports |
-| Earlier rounds | `pslms-2004-05.pdf`, `merged_document.pdf` (2004-05), `report_pslm06_07.pdf`, `merged_document-2.pdf` (2006-07), `report_pslm08_09.pdf`, `1merged_document.pdf` (2008-09), `1merged_document-1.pdf` (2010-11) | Older rounds for comparisons over time |
+All PDFs are in `data/raw/`, one folder per survey round.
 
-Duplicates: `report-13-14_merged (1).pdf` is identical to `report-13-14_merged.pdf`, and the two `Table-6.1-...` files are identical.
+| Group | Folder | Files | Content |
+|---|---|---|---|
+| **2019-20 district tables** (main dataset) | `pslm_2019-20_district/tables/<topic>/` | `Table-*.pdf` (30 tables) | One table per indicator, about 120 districts across Punjab, Sindh, Khyber Pakhtunkhwa and Balochistan |
+| 2019-20 full report | `pslm_2019-20_district/reports/` | `PSLM_2019_20_District_Level.pdf`, `Key_Finding_Report_...2019-20.pdf` | Full district report and key findings |
+| 2014-15 (district round) | `pslm_2014-15_district/` | `PSLM_2014-15_National-Provincial-District_report.pdf` | National/provincial/district report |
+| 2013-14 (provincial round) | `pslm_2013-14_provincial/` | `PSLM_2013-14_National-Provincial_report.pdf` | National/provincial report only |
+| 2010-11 (district round) | `pslm_2010-11_district/` | `PSLM_2010-11_District_report.pdf` | District report |
+| 2008-09, 2006-07, 2004-05 (district rounds) | `pslm_<year>_district/` | `PSLM_<year>_District_report.pdf`, `PSLM_<year>_National-Provincial_report.pdf` | District report plus a shorter national/provincial report |
+
+Original file names of the renamed reports:
+
+| Original name | New name |
+|---|---|
+| `merged_document.pdf` | `PSLM_2004-05_District_report.pdf` |
+| `pslms-2004-05.pdf` | `PSLM_2004-05_National-Provincial_report.pdf` |
+| `merged_document-2.pdf` | `PSLM_2006-07_District_report.pdf` |
+| `report_pslm06_07.pdf` | `PSLM_2006-07_National-Provincial_report.pdf` |
+| `1merged_document.pdf` | `PSLM_2008-09_District_report.pdf` |
+| `report_pslm08_09.pdf` | `PSLM_2008-09_National-Provincial_report.pdf` |
+| `1merged_document-1.pdf` | `PSLM_2010-11_District_report.pdf` |
+| `report-13-14_merged.pdf` | `PSLM_2013-14_National-Provincial_report.pdf` |
+
+The duplicate copy of Table 6.1 (`...-district-of-birth-1.pdf`, byte-identical) was removed.
 
 ### Topics in the 2019-20 tables
 

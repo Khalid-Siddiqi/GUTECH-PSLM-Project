@@ -8,12 +8,28 @@ Master's project using data from the **Pakistan Social and Living Standards Meas
 - **Social network analysis:** district similarity networks, indicator correlation networks and district–indicator bipartite networks; community detection and centrality.
 
 ## Data in this repository
-| Files | Content |
-|---|---|
-| `Table-*.pdf` | Individual tables from the PSLM 2019-20 District Level report (education, ICT, health, disability, migration, housing, perception, food insecurity) |
-| `PSLM_2019_20_District_Level.pdf`, `Key_Finding_Report_...2019-20.pdf` | PSLM 2019-20 district report and key findings |
-| `PSLM_2014-15_...pdf`, `report-13-14_merged*.pdf` | PSLM 2014-15 and 2013-14 reports |
-| `1merged_document*.pdf`, `merged_document*.pdf`, `report_pslm0*.pdf`, `pslms-2004-05.pdf` | Earlier rounds (2004-05 to 2010-11) |
+All source PDFs are in `data/raw/`, with one folder per survey round. The folder name says whether the round is **district** level or **provincial** level.
+
+```
+data/raw/
+├── pslm_2019-20_district/          ← main dataset
+│   ├── reports/                    full district report + key findings
+│   └── tables/                     individual district tables, by topic
+│       ├── 02_education/
+│       ├── 03_ict/
+│       ├── 04_health/
+│       ├── 05_disability/
+│       ├── 06_migration/
+│       ├── 07_housing_utilities/
+│       ├── 08_perception_satisfaction/
+│       └── 09_food_insecurity/
+├── pslm_2014-15_district/
+├── pslm_2013-14_provincial/
+├── pslm_2010-11_district/
+├── pslm_2008-09_district/          district report + national/provincial report
+├── pslm_2006-07_district/          district report + national/provincial report
+└── pslm_2004-05_district/          district report + national/provincial report
+```
 
 See [DATASET_INFO.md](DATASET_INFO.md) for a full description of the data and what can be done with it.
 

@@ -16,6 +16,29 @@ Template for a new day (copy above the latest entry):
 - 
 -->
 
+## 2026-11-07
+
+### Done
+- Organised all PDFs into `data/raw/`, one folder per survey round (`pslm_<year>_district` or `pslm_<year>_provincial`).
+- Grouped the 2019-20 tables into topic subfolders (education, ICT, health, disability, migration, housing & utilities, perception & satisfaction, food insecurity) and put the full reports in `reports/`.
+- Renamed unclear report files (e.g. `1merged_document.pdf` → `PSLM_2008-09_District_report.pdf`) after checking each file's preface for its round.
+- Removed the byte-identical duplicate of Table 6.1.
+- Checked survey facts against official PBS documents:
+  - PSLM 2019-20 (district): fieldwork Oct 2019 – Mar 2020; 5,893 blocks / 176,790 households covered (planned 6,500 / 195,000); questionnaire 20 pages, about 45 min.
+  - PSLM/HIES 2024-25 (provincial): fieldwork Sep 2024 – Jun 2025; 2,343 blocks / 32,814 households covered (planned 2,500 blocks); questionnaire 28 pages (male) and 23 pages (female), about 45–60 min.
+  - PSLM 2026 (district): fieldwork started 15 Jul 2026; 6,300 PSUs × 25 households; results not yet published.
+
+### Files changed
+- Moved and renamed all PDFs (`git mv`, so history is kept).
+- Updated `README.md` and `DATASET_INFO.md` with the new paths.
+
+### Findings / decisions
+- PSLM 2019-20 is still the latest district-level round; 2024-25 is provincial only.
+- Census 2023 district tables (literacy, out-of-school, housing) are the only post-2020 district-level source. They could be used to validate or update the out-of-school target.
+
+### Next steps
+- Extract all 2019-20 tables into one clean district × indicator dataset (`data/processed/`).
+
 ## 2026-11-01
 
 ### Done
