@@ -10,3 +10,6 @@ Thumbs.db
 desktop.ini
 .DS_Store
 .vscode/
+
+# Too large for GitHub (>100 MB) - extract from "HIES 2024_2025/Stata-data-1.zip"
+HIES 2024_2025/Stata data/sec_6a_consum_exp.dta
