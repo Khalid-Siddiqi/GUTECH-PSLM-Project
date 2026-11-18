@@ -4,7 +4,7 @@ This guide explains every file in the `Stata data` folder: what it contains, how
 
 You do not need any background in survey statistics to read it. Technical words are explained the first time they appear, and there is a glossary at the end.
 
-All numbers in this guide were computed directly from the files in this folder.
+All numbers in this guide were computed directly from the files in the `Stata data/` folder.
 
 ---
 
@@ -32,14 +32,14 @@ In the 2024-25 round:
 - Interviewers visited **30,123 households** between **October 2024 and June 2025**.
 - They used tablets instead of paper questionnaires, for the first time.
 - These households contain **184,564 people**.
-- Each household answered two questionnaires: a **male questionnaire**, usually answered by a man of the household, and a **female questionnaire**, answered by a woman. Both PDFs are in the parent folder.
+- Each household answered two questionnaires: a **male questionnaire**, usually answered by a man of the household, and a **female questionnaire**, answered by a woman. Both PDFs are in this folder.
 - The survey covers income, spending, assets, savings, education, health, mobile phone and internet use, housing, water and sanitation, food insecurity, and more.
 
 **Coverage of these files:** Khyber Pakhtunkhwa (KP), Punjab, Sindh, Balochistan and Islamabad. The official report says the survey also covered Azad Jammu & Kashmir (AJK) and Gilgit-Baltistan (GB), but **those households are not in these files**.
 
 ### "Microdata" vs. report tables
 
-The PDF report shows **summary tables**, such as "X% of households have internet". The files in this folder are **microdata**: one row for each household, each person, or each item a household bought. This is the raw material that the report's tables were calculated from.
+The PDF report shows **summary tables**, such as "X% of households have internet". The files in `Stata data/` are **microdata**: one row for each household, each person, or each item a household bought. This is the raw material that the report's tables were calculated from.
 
 With microdata you can produce your own tables, combine topics (for example, income and education), and build models.
 
@@ -200,7 +200,7 @@ Other columns in the roster store `idc` values of related people: `s1aq07` (spou
 
 ## 5. The three shapes of files
 
-Before analysing a file, ask: **"What does one row represent?"** In this folder there are three answers.
+Before analysing a file, ask: **"What does one row represent?"** In `Stata data/` there are three answers.
 
 ### Shape 1: household files (one row = one household)
 
@@ -253,7 +253,7 @@ Examples: consumption expenditure (Section 6A), durable goods (Section 7), trans
 | `sec_10b_livestock.dta` | Livestock, animal products, costs | household × item | 60,704 | 5,953 |
 | `sec_11ab_nonagri.dta` | Non-farm household businesses | business × item | 128,699 | 6,218 |
 
-**About file sizes:** `sec_6a_consum_exp.dta` is 138 MB. It is stored on GitHub with Git LFS, which needs to be installed to download it properly. The same data is also inside `../Stata-data-1.zip`.
+**About file sizes:** `sec_6a_consum_exp.dta` is 138 MB. It is stored on GitHub with Git LFS, which needs to be installed to download it properly. The same data is also inside `Stata-data-1.zip`.
 
 ---
 
@@ -691,7 +691,7 @@ Households in the same village tend to be similar, so the sample contains less i
 
 ## CSV versions of these files
 
-The folder `../CSV data/` has a readable CSV copy of every file in this folder, made by `../stata_to_csv.py`:
+The folder `CSV data/` has a readable CSV copy of every file in `Stata data/`, made by `stata_to_csv.py`:
 
 - Coded answers are replaced by their text (e.g. `male`, `currently married`, `yes`).
 - Item codes (`itc`, `code`, `ind_code`) keep the number and get an extra `_label` column with the item name.
@@ -729,7 +729,7 @@ The folder `../CSV data/` has a readable CSV copy of every file in this folder, 
 
 ## Where to look for more detail
 
-All of these are in the parent folder `HIES 2024_2025/`:
+All of these are in this folder (`HIES 2024_2025/`):
 
 | File | Use it for |
 |---|---|
