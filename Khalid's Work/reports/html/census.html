@@ -1,0 +1,446 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Benchmarking HIES 2024-25 against the 2023 Census</title><style>
+@page { size: A4; margin: 22mm 19mm 20mm 19mm;
+  @top-left { content: "Benchmarking HIES 2024-25 against the 2023 Census"; font: 7.5pt "Segoe UI"; color: #898781; vertical-align: bottom; padding-bottom: 3mm; }
+  @top-right { content: "HIES 2024-25"; font: 7.5pt "Segoe UI"; color: #898781; vertical-align: bottom; padding-bottom: 3mm; }
+  @bottom-right { content: counter(page) " / " counter(pages); font: 7.5pt "Segoe UI"; color: #898781; vertical-align: top; padding-top: 3mm; }
+  @bottom-left { content: "Technical note"; font: 7.5pt "Segoe UI"; color: #898781; vertical-align: top; padding-top: 3mm; }
+}
+@page :first { @top-left { content: none; } @top-right { content: none; } }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { font-family: "Segoe UI", system-ui, sans-serif; font-size: 9.6pt; line-height: 1.5; color: #1f1f1d; margin: 0; background: #fff;
+  font-variant-numeric: tabular-nums; }
+.kicker { font-size: 8pt; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #2a78d6; margin: 0 0 6pt; }
+h1 { font-size: 19pt; font-weight: 600; line-height: 1.2; color: #0d366b; margin: 0 0 4pt; letter-spacing: -0.01em; }
+.dek { font-size: 11pt; color: #52514e; margin: 0 0 12pt; font-weight: 300; }
+.meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0 14pt; border-top: 1.4pt solid #0d366b; border-bottom: 0.6pt solid #c3c2b7;
+  padding: 6pt 0 7pt; margin-bottom: 12pt; font-size: 7.8pt; color: #52514e; }
+.meta b { display: block; color: #0b0b0b; font-size: 7pt; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1pt; }
+.summary { background: #f4f8fd; border-left: 3pt solid #2a78d6; padding: 7pt 12pt 7pt 12pt; margin: 0 0 10pt; break-inside: avoid; }
+.summary h2 { font-size: 9pt; text-transform: uppercase; letter-spacing: 0.08em; color: #0d366b; margin: 0 0 4pt; border: none; padding: 0; }
+.summary ul { margin: 0; padding-left: 13pt; } .summary li { margin: 2.5pt 0; }
+h2 { font-size: 12.5pt; font-weight: 600; color: #0d366b; margin: 16pt 0 5pt; break-after: avoid; }
+h2 .n { color: #2a78d6; margin-right: 6pt; }
+h3 { font-size: 10pt; font-weight: 600; color: #0b0b0b; margin: 10pt 0 3pt; break-after: avoid; }
+p { margin: 0 0 6pt; text-align: justify; hyphens: auto; }
+ul, ol { margin: 0 0 6pt; padding-left: 15pt; } li { margin: 1.5pt 0; }
+.eq { display: grid; grid-template-columns: 1fr auto; align-items: center; margin: 4pt 0 6pt; padding: 0 0 0 18pt; break-inside: avoid; }
+.eq math { font-size: 11pt; justify-self: center; }
+.eq .no { color: #898781; font-size: 8.5pt; }
+table { border-collapse: collapse; width: 100%; font-size: 8.4pt; margin: 2pt 0 2pt; }
+caption { caption-side: top; text-align: left; font-size: 8.6pt; color: #0b0b0b; padding: 0 0 4pt; }
+caption b, figcaption b { color: #0d366b; }
+thead th { border-top: 1.2pt solid #0b0b0b; border-bottom: 0.6pt solid #0b0b0b; font-weight: 600; padding: 4pt 5pt; text-align: left; vertical-align: bottom; }
+tbody td { padding: 3pt 5pt; border-bottom: 0.4pt solid #e1e0d9; vertical-align: top; }
+tbody tr:last-child td { border-bottom: 1.2pt solid #0b0b0b; }
+tr.total td { font-weight: 600; border-top: 0.6pt solid #0b0b0b; }
+tbody td:first-child { white-space: nowrap; }
+td.r, th.r { text-align: right; } td.c, th.c { text-align: center; }
+.nowrap tbody td { white-space: nowrap; padding-top: 2pt; padding-bottom: 2pt; }
+.tbl { margin: 8pt 0 10pt; break-inside: avoid; }
+.note { font-size: 7.4pt; color: #52514e; margin: 3pt 0 0; line-height: 1.4; text-align: left; }
+figure { margin: 10pt 0 12pt; break-inside: avoid; }
+figure svg { width: 100%; height: auto; display: block; }
+figcaption { font-size: 8.6pt; margin: 0 0 5pt; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 14pt; }
+.refs { font-size: 7.8pt; color: #52514e; } .refs li { margin: 2pt 0; }
+a { color: #1c5cab; text-decoration: none; }
+code { font-family: Consolas, monospace; font-size: 8pt; background: #f4f3ef; padding: 0 2pt; }
+.pb { break-before: page; }
+</style></head><body>
+<p class="kicker">Technical note</p>
+<h1>Benchmarking HIES 2024-25 against the 2023 Census</h1>
+<p class="dek">Households, population, rural share and provinces</p>
+<div class="meta">
+  <div><b>Survey</b>HIES 2024-25, 30,123 households interviewed Oct 2024 – Jun 2025</div>
+  <div><b>Benchmark</b>7th Population and Housing Census, 1 March 2023</div>
+  <div><b>Coverage</b>Four provinces and Islamabad (AJK and Gilgit-Baltistan in neither)</div>
+  <div><b>Date</b>November 2026</div>
+</div>
+<div class="summary"><h2>Summary</h2><ul>
+  <li><b>Households:</b> HIES gives 40.1 million, within 1.3% of the census figure brought forward to the survey period.</li>
+  <li><b>Population:</b> HIES gives 239.8 million, about 5% below the census figure brought forward, because HIES households are smaller (5.98 people against 6.30).</li>
+  <li><b>Rural share and provinces:</b> agree with the census to within one percentage point.</li>
+</ul></div>
+
+<h2><span class="n">1</span>How the comparison works</h2>
+<ul>
+  <li><b>HIES totals.</b> Each of the 30,123 surveyed households has a weight: the number of Pakistani households it stands for. Adding up the weights gives the number of households in Pakistan. Adding up weight × household members gives the population.</li>
+  <li><b>Same point in time.</b> The census counted Pakistan in March 2023; HIES interviews were about two years later (middle: February 2025). The census counts are therefore also grown to February 2025 at the census's own yearly growth rates: 3.1% for households and 2.55% for population.</li>
+</ul>
+
+<h2><span class="n">2</span>Pakistan</h2>
+<div class="tbl"><table><caption><b>Table 1.</b> Pakistan: HIES 2024-25 and the census</caption><thead><tr><th class="l"></th><th class="r">HIES 2024-25</th><th class="r">Census 2023</th><th class="r">Census grown to Feb 2025</th><th class="r">Difference</th></tr></thead><tbody><tr><td class="l">Households (million)</td><td class="r">40.12</td><td class="r">38.29</td><td class="r">40.63</td><td class="r">−1.3%<sup>a</sup></td></tr><tr><td class="l">Population (million)</td><td class="r">239.82</td><td class="r">241.49</td><td class="r">253.66</td><td class="r">−5.5%<sup>a</sup></td></tr><tr><td class="l">People per household</td><td class="r">5.98</td><td class="r">6.30</td><td class="r"></td><td class="r">−5.1%</td></tr><tr><td class="l">People living in rural areas (%)</td><td class="r">61.3</td><td class="r">61.2</td><td class="r"></td><td class="r">+0.1 points</td></tr><tr><td class="l">Households in rural areas (%)</td><td class="r">59.3</td><td class="r">not published</td><td class="r"></td><td class="r"></td></tr><tr><td class="l">Households lit by grid electricity (%)</td><td class="r">88.2</td><td class="r">84.0</td><td class="r"></td><td class="r">+4.2 points</td></tr></tbody></table><p class="note"><sup>a</sup> Compared with the census grown to the HIES interview period. Other rows are compared with the census of March 2023. Grid electricity in HIES includes households using grid and solar together; the census may count these differently.</p></div>
+<p><b>The number of households agrees.</b> HIES counts 40.1 million households, 4.8% more than the census found in March 2023. That is about two years of growth: compared with the census grown to February 2025, HIES is only 1.3% lower.</p>
+<p><b>The population is lower than expected.</b> HIES finds the same population as the 2023 census (239.8 against 241.5 million), but by 2025 the population should have grown to about 254 million. The reason is household size: HIES records 5.98 people per household, the census 6.30. HIES counts only usual household members, does not cover people living in hostels, barracks or prisons, and, like most surveys, tends to miss some very large households.</p>
+
+<figure><figcaption><b>Figure 1.</b> Households and population</figcaption>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="477.443047pt" height="102.020313pt" viewBox="0 0 477.443047 102.020313" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-23T07:50:25.954467</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 102.020313 
+L 477.443047 102.020313 
+L 477.443047 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 106.233047 86.892656 
+L 282.875547 86.892656 
+L 282.875547 13.172656 
+L 106.233047 13.172656 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 106.233047 86.892656 
+L 106.233047 13.172656 
+" clip-path="url(#p8062f05ad6)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2"/>
+     <g id="text_1">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="106.233047" y="97.185313" transform="rotate(-0 106.233047 97.185313)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 144.042657 86.892656 
+L 144.042657 13.172656 
+" clip-path="url(#p8062f05ad6)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4"/>
+     <g id="text_2">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="144.042657" y="97.185313" transform="rotate(-0 144.042657 97.185313)">10</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 181.852266 86.892656 
+L 181.852266 13.172656 
+" clip-path="url(#p8062f05ad6)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6"/>
+     <g id="text_3">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="181.852266" y="97.185313" transform="rotate(-0 181.852266 97.185313)">20</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 219.661876 86.892656 
+L 219.661876 13.172656 
+" clip-path="url(#p8062f05ad6)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8"/>
+     <g id="text_4">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="219.661876" y="97.185313" transform="rotate(-0 219.661876 97.185313)">30</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 257.471486 86.892656 
+L 257.471486 13.172656 
+" clip-path="url(#p8062f05ad6)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10"/>
+     <g id="text_5">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="257.471486" y="97.185313" transform="rotate(-0 257.471486 97.185313)">40</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_11"/>
+     <g id="text_6">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: end; fill: #52514e" x="102.233047" y="27.599526" transform="rotate(-0 102.233047 27.599526)">HIES 2024-25</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_12"/>
+     <g id="text_7">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: end; fill: #52514e" x="102.233047" y="53.178984" transform="rotate(-0 102.233047 53.178984)">Census, Mar 2023</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_13"/>
+     <g id="text_8">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: end; fill: #52514e" x="102.233047" y="78.758443" transform="rotate(-0 102.233047 78.758443)">Census grown to Feb 2025</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 106.233047 32.38283 
+L 257.907906 32.38283 
+L 257.907906 16.523565 
+L 106.233047 16.523565 
+z
+" clip-path="url(#p8062f05ad6)" style="fill: #2a78d6; stroke: #2a78d6; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 106.233047 57.962288 
+L 251.006042 57.962288 
+L 251.006042 42.103024 
+L 106.233047 42.103024 
+z
+" clip-path="url(#p8062f05ad6)" style="fill: #eb6834; stroke: #eb6834; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 106.233047 83.541747 
+L 259.835221 83.541747 
+L 259.835221 67.682483 
+L 106.233047 67.682483 
+z
+" clip-path="url(#p8062f05ad6)" style="fill: url(#h006291e711); stroke: #eb6834; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 106.233047 86.892656 
+L 282.875547 86.892656 
+" style="fill: none; stroke: #c3c2b7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 8px; font-family: 'Segoe UI'; text-anchor: start; fill: #0b0b0b" x="260.211939" y="26.494448" transform="rotate(-0 260.211939 26.494448)">40.1</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 8px; font-family: 'Segoe UI'; text-anchor: start; fill: #0b0b0b" x="253.310075" y="52.073906" transform="rotate(-0 253.310075 52.073906)">38.3</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 8px; font-family: 'Segoe UI'; text-anchor: start; fill: #0b0b0b" x="262.139253" y="77.653365" transform="rotate(-0 262.139253 77.653365)">40.6</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: start; fill: #0b0b0b" x="106.233047" y="9.172656" transform="rotate(-0 106.233047 9.172656)">Households (million)</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_7">
+    <path d="M 297.920547 86.892656 
+L 474.563047 86.892656 
+L 474.563047 13.172656 
+L 297.920547 13.172656 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_3">
+    <g id="xtick_6">
+     <g id="line2d_14">
+      <path d="M 297.920547 86.892656 
+L 297.920547 13.172656 
+" clip-path="url(#p0e2ffa810b)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_15"/>
+     <g id="text_13">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="297.920547" y="97.185313" transform="rotate(-0 297.920547 97.185313)">0</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_16">
+      <path d="M 328.198105 86.892656 
+L 328.198105 13.172656 
+" clip-path="url(#p0e2ffa810b)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_17"/>
+     <g id="text_14">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="328.198105" y="97.185313" transform="rotate(-0 328.198105 97.185313)">50</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_18">
+      <path d="M 358.475662 86.892656 
+L 358.475662 13.172656 
+" clip-path="url(#p0e2ffa810b)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_19"/>
+     <g id="text_15">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="358.475662" y="97.185313" transform="rotate(-0 358.475662 97.185313)">100</text>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_20">
+      <path d="M 388.75322 86.892656 
+L 388.75322 13.172656 
+" clip-path="url(#p0e2ffa810b)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_21"/>
+     <g id="text_16">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="388.75322" y="97.185313" transform="rotate(-0 388.75322 97.185313)">150</text>
+     </g>
+    </g>
+    <g id="xtick_10">
+     <g id="line2d_22">
+      <path d="M 419.030777 86.892656 
+L 419.030777 13.172656 
+" clip-path="url(#p0e2ffa810b)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_23"/>
+     <g id="text_17">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="419.030777" y="97.185313" transform="rotate(-0 419.030777 97.185313)">200</text>
+     </g>
+    </g>
+    <g id="xtick_11">
+     <g id="line2d_24">
+      <path d="M 449.308335 86.892656 
+L 449.308335 13.172656 
+" clip-path="url(#p0e2ffa810b)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_25"/>
+     <g id="text_18">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="449.308335" y="97.185313" transform="rotate(-0 449.308335 97.185313)">250</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_4">
+    <g id="ytick_4">
+     <g id="line2d_26"/>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_27"/>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_28"/>
+    </g>
+   </g>
+   <g id="patch_8">
+    <path d="M 297.920547 32.38283 
+L 443.145942 32.38283 
+L 443.145942 16.523565 
+L 297.920547 16.523565 
+z
+" clip-path="url(#p0e2ffa810b)" style="fill: #2a78d6; stroke: #2a78d6; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 297.920547 57.962288 
+L 444.155095 57.962288 
+L 444.155095 42.103024 
+L 297.920547 42.103024 
+z
+" clip-path="url(#p0e2ffa810b)" style="fill: #eb6834; stroke: #eb6834; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 297.920547 83.541747 
+L 451.522721 83.541747 
+L 451.522721 67.682483 
+L 297.920547 67.682483 
+z
+" clip-path="url(#p0e2ffa810b)" style="fill: url(#h006291e711); stroke: #eb6834; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 297.920547 86.892656 
+L 474.563047 86.892656 
+" style="fill: none; stroke: #c3c2b7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 8px; font-family: 'Segoe UI'; text-anchor: start; fill: #0b0b0b" x="445.449975" y="26.494448" transform="rotate(-0 445.449975 26.494448)">239.8</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 8px; font-family: 'Segoe UI'; text-anchor: start; fill: #0b0b0b" x="446.459127" y="52.073906" transform="rotate(-0 446.459127 52.073906)">241.5</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 8px; font-family: 'Segoe UI'; text-anchor: start; fill: #0b0b0b" x="453.826753" y="77.653365" transform="rotate(-0 453.826753 77.653365)">253.7</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: start; fill: #0b0b0b" x="297.920547" y="9.172656" transform="rotate(-0 297.920547 9.172656)">Population (million)</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p8062f05ad6">
+   <rect x="106.233047" y="13.172656" width="176.6425" height="73.72"/>
+  </clipPath>
+  <clipPath id="p0e2ffa810b">
+   <rect x="297.920547" y="13.172656" width="176.6425" height="73.72"/>
+  </clipPath>
+ </defs>
+ <defs>
+  <pattern id="h006291e711" patternUnits="userSpaceOnUse" x="0" y="0" width="72" height="72">
+   <rect x="0" y="0" width="73" height="73" fill="#ffffff"/>
+   <path d="M -36 36 
+L 36 -36 
+M -33 39 
+L 39 -33 
+M -30 42 
+L 42 -30 
+M -27 45 
+L 45 -27 
+M -24 48 
+L 48 -24 
+M -21 51 
+L 51 -21 
+M -18 54 
+L 54 -18 
+M -15 57 
+L 57 -15 
+M -12 60 
+L 60 -12 
+M -9 63 
+L 63 -9 
+M -6 66 
+L 66 -6 
+M -3 69 
+L 69 -3 
+M 0 72 
+L 72 0 
+M 3 75 
+L 75 3 
+M 6 78 
+L 78 6 
+M 9 81 
+L 81 9 
+M 12 84 
+L 84 12 
+M 15 87 
+L 87 15 
+M 18 90 
+L 90 18 
+M 21 93 
+L 93 21 
+M 24 96 
+L 96 24 
+M 27 99 
+L 99 27 
+M 30 102 
+L 102 30 
+M 33 105 
+L 105 33 
+M 36 108 
+L 108 36 
+" style="fill: #eb6834; stroke: #eb6834; stroke-width: 0.7; stroke-linecap: butt; stroke-linejoin: miter"/>
+  </pattern>
+ </defs>
+</svg>
+<p class="note">Source: HIES 2024-25 (author's calculations); PBS, Census 2023.</p></figure>
+<h2><span class="n">3</span>Provinces</h2>
+<div class="tbl"><table><caption><b>Table 2.</b> Provinces: HIES 2024-25 and Census 2023</caption><thead><tr><th class="l">Province</th><th class="r">Households, HIES (m)</th><th class="r">Population, HIES (m)</th><th class="r">Population, Census (m)</th><th class="r">% of population, HIES</th><th class="r">% of population, Census</th><th class="r">% rural, HIES</th><th class="r">% rural, Census</th><th class="r">People per household, HIES</th></tr></thead><tbody><tr><td class="l">Punjab</td><td class="r">21.98</td><td class="r">126.7</td><td class="r">127.7</td><td class="r">52.8</td><td class="r">52.9</td><td class="r">59.5</td><td class="r">59</td><td class="r">5.76</td></tr><tr><td class="l">Sindh</td><td class="r">9.73</td><td class="r">55.4</td><td class="r">55.7</td><td class="r">23.1</td><td class="r">23.1</td><td class="r">46.2</td><td class="r">47</td><td class="r">5.70</td></tr><tr><td class="l">Khyber Pakhtunkhwa</td><td class="r">5.94</td><td class="r">40.6</td><td class="r">40.9</td><td class="r">16.9</td><td class="r">16.9</td><td class="r">85.1</td><td class="r">85</td><td class="r">6.83</td></tr><tr><td class="l">Balochistan</td><td class="r">2.08</td><td class="r">14.7</td><td class="r">14.9</td><td class="r">6.1</td><td class="r">6.2</td><td class="r">68.8</td><td class="r">69</td><td class="r">7.08</td></tr><tr><td class="l">Islamabad</td><td class="r">0.38</td><td class="r">2.3</td><td class="r">2.4</td><td class="r">1.0</td><td class="r">1.0</td><td class="r">53.2</td><td class="r">53</td><td class="r">6.10</td></tr><tr class="total"><td class="l">Pakistan</td><td class="r">40.12</td><td class="r">239.8</td><td class="r">241.5</td><td class="r">100.0</td><td class="r">100.0</td><td class="r">61.3</td><td class="r">61.2</td><td class="r">5.98</td></tr></tbody></table><p class="note">m = million; % rural = share of the province's people living in rural areas. Census rural shares are published rounded to whole numbers. Islamabad is identified from the first digit of the HIES area code (the raw files code it as Punjab). The census releases consulted do not give households by province.</p></div>
+<p>Each province's share of the population is within 0.1 percentage points of the census, and each province's rural share within 0.8 points. This is expected, as the HIES sample was drawn from the census, and confirms that the weights are applied correctly.</p>
+
+<h2><span class="n">4</span>Conclusions</h2>
+<ul>
+  <li>HIES reproduces the census picture of where people live: by province and between rural and urban areas.</li>
+  <li>The number of households (40.1 million) is the most reliable HIES total. This supports using the household as the unit of analysis.</li>
+  <li>Population totals from HIES are about 5% too low for 2025 and should be quoted with that caveat.</li>
+</ul>
+<p class="note"><b>Sources.</b> PBS, <i>HIES 2024-25</i> report and microdata. PBS, <a href="https://www.pbs.gov.pk/node/1576">7th Population and Housing Census 2023 results</a>;
+<a href="https://www.pbs.gov.pk/wp-content/uploads/2020/07/National-Census-Report-2023.pdf">National Census Report 2023</a> (households: 38.29 million in 2023, 31.92 million in 2017; household size);
+<a href="https://www.pbs.gov.pk/sites/default/files/population/2023/material/pakistan_housing_data.pdf">Pakistan housing data</a> (lighting);
+<a href="https://www.dawn.com/news/1768626">Dawn, 6 Aug 2023</a> (provincial populations, rural shares). Census figures were transcribed from these releases.
+Calculations: <code>0_household_master/build_household_master.ipynb</code>, <code>reports/build_reports.py</code>.</p>
+</body></html>

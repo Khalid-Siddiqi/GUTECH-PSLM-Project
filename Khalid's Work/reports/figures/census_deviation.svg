@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="476.899453pt" height="152.118281pt" viewBox="0 0 476.899453 152.118281" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-21T09:17:55.926062</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 152.118281 
+L 476.899453 152.118281 
+L 476.899453 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 85.308437 124.742969 
+L 266.328438 124.742969 
+L 266.328438 15.262969 
+L 85.308437 15.262969 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 130.563438 124.742969 
+L 221.073438 124.742969 
+L 221.073438 15.262969 
+L 130.563438 15.262969 
+z
+" clip-path="url(#p7dc7670915)" style="fill: #f4f8fd; stroke: #f4f8fd; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1"/>
+     <g id="text_1">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="85.308438" y="135.035625" transform="rotate(-0 85.308438 135.035625)">−2</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2"/>
+     <g id="text_2">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="130.563438" y="135.035625" transform="rotate(-0 130.563438 135.035625)">−1</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3"/>
+     <g id="text_3">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="175.818438" y="135.035625" transform="rotate(-0 175.818438 135.035625)">0</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4"/>
+     <g id="text_4">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="221.073438" y="135.035625" transform="rotate(-0 221.073438 135.035625)">1</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5"/>
+     <g id="text_5">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="266.328438" y="135.035625" transform="rotate(-0 266.328438 135.035625)">2</text>
+     </g>
+    </g>
+    <g id="text_6">
+     <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="175.818438" y="147.238125" transform="rotate(-0 175.818438 147.238125)">HIES minus Census (percentage points)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_6"/>
+     <g id="text_7">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: end; fill: #52514e" x="81.308437" y="23.385661" transform="rotate(-0 81.308437 23.385661)">Punjab</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_7"/>
+     <g id="text_8">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: end; fill: #52514e" x="81.308437" y="48.267479" transform="rotate(-0 81.308437 48.267479)">Sindh</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_8"/>
+     <g id="text_9">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: end; fill: #52514e" x="81.308437" y="73.149297" transform="rotate(-0 81.308437 73.149297)">Khyber Pakhtunkhwa</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_9"/>
+     <g id="text_10">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: end; fill: #52514e" x="81.308437" y="98.031115" transform="rotate(-0 81.308437 98.031115)">Balochistan</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_10"/>
+     <g id="text_11">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: end; fill: #52514e" x="81.308437" y="122.912933" transform="rotate(-0 81.308437 122.912933)">Islamabad</text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_11">
+    <path d="M 175.818438 124.742969 
+L 175.818438 15.262969 
+" clip-path="url(#p7dc7670915)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="LineCollection_1">
+    <path d="M 175.818438 20.239332 
+L 173.499774 20.239332 
+" clip-path="url(#p7dc7670915)" style="fill: none; stroke: #2a78d6; stroke-width: 1.6"/>
+    <path d="M 175.818438 45.121151 
+L 178.424885 45.121151 
+" clip-path="url(#p7dc7670915)" style="fill: none; stroke: #2a78d6; stroke-width: 1.6"/>
+    <path d="M 175.818438 70.002969 
+L 176.5308 70.002969 
+" clip-path="url(#p7dc7670915)" style="fill: none; stroke: #2a78d6; stroke-width: 1.6"/>
+    <path d="M 175.818438 94.884787 
+L 175.031357 94.884787 
+" clip-path="url(#p7dc7670915)" style="fill: none; stroke: #2a78d6; stroke-width: 1.6"/>
+    <path d="M 175.818438 119.766605 
+L 175.605371 119.766605 
+" clip-path="url(#p7dc7670915)" style="fill: none; stroke: #2a78d6; stroke-width: 1.6"/>
+   </g>
+   <g id="line2d_12">
+    <defs>
+     <path id="m8239ebcfed" d="M 0 2.5 
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767 
+C 2.236584 1.29895 2.5 0.663008 2.5 0 
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767 
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5 
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767 
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0 
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767 
+C -1.29895 2.236584 -0.663008 2.5 0 2.5 
+z
+" style="stroke: #2a78d6"/>
+    </defs>
+    <g clip-path="url(#p7dc7670915)">
+     <use xlink:href="#m8239ebcfed" x="173.499774" y="20.239332" style="fill: #2a78d6; stroke: #2a78d6"/>
+     <use xlink:href="#m8239ebcfed" x="178.424885" y="45.121151" style="fill: #2a78d6; stroke: #2a78d6"/>
+     <use xlink:href="#m8239ebcfed" x="176.5308" y="70.002969" style="fill: #2a78d6; stroke: #2a78d6"/>
+     <use xlink:href="#m8239ebcfed" x="175.031357" y="94.884787" style="fill: #2a78d6; stroke: #2a78d6"/>
+     <use xlink:href="#m8239ebcfed" x="175.605371" y="119.766605" style="fill: #2a78d6; stroke: #2a78d6"/>
+    </g>
+   </g>
+   <g id="patch_4">
+    <path d="M 85.308438 124.742969 
+L 266.328438 124.742969 
+" style="fill: none; stroke: #c3c2b7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 7.5px; font-family: 'Segoe UI'; text-anchor: end; fill: #0b0b0b" x="168.125088" y="22.153004" transform="rotate(-0 168.125088 22.153004)">−0.05</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 7.5px; font-family: 'Segoe UI'; text-anchor: start; fill: #0b0b0b" x="183.964338" y="47.034822" transform="rotate(-0 183.964338 47.034822)">+0.06</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 7.5px; font-family: 'Segoe UI'; text-anchor: start; fill: #0b0b0b" x="182.154138" y="71.916641" transform="rotate(-0 182.154138 71.916641)">+0.02</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 7.5px; font-family: 'Segoe UI'; text-anchor: end; fill: #0b0b0b" x="169.482738" y="96.798459" transform="rotate(-0 169.482738 96.798459)">−0.02</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 7.5px; font-family: 'Segoe UI'; text-anchor: start; fill: #0b0b0b" x="181.249038" y="121.680277" transform="rotate(-0 181.249038 121.680277)">+0.00</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: start; fill: #0b0b0b" x="85.308437" y="9.262969" transform="rotate(-0 85.308437 9.262969)">Share of national population</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_5">
+    <path d="M 290.708438 124.742969 
+L 471.728437 124.742969 
+L 471.728437 15.262969 
+L 290.708438 15.262969 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 335.963437 124.742969 
+L 426.473437 124.742969 
+L 426.473437 15.262969 
+L 335.963437 15.262969 
+z
+" clip-path="url(#p5a1979e954)" style="fill: #f4f8fd; stroke: #f4f8fd; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_3">
+    <g id="xtick_6">
+     <g id="line2d_13"/>
+     <g id="text_18">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="290.708437" y="135.035625" transform="rotate(-0 290.708437 135.035625)">−2</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_14"/>
+     <g id="text_19">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="335.963437" y="135.035625" transform="rotate(-0 335.963437 135.035625)">−1</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_15"/>
+     <g id="text_20">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="381.218437" y="135.035625" transform="rotate(-0 381.218437 135.035625)">0</text>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_16"/>
+     <g id="text_21">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="426.473437" y="135.035625" transform="rotate(-0 426.473437 135.035625)">1</text>
+     </g>
+    </g>
+    <g id="xtick_10">
+     <g id="line2d_17"/>
+     <g id="text_22">
+      <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="471.728437" y="135.035625" transform="rotate(-0 471.728437 135.035625)">2</text>
+     </g>
+    </g>
+    <g id="text_23">
+     <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: middle; fill: #52514e" x="381.218437" y="147.238125" transform="rotate(-0 381.218437 147.238125)">HIES minus Census (percentage points)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_4">
+    <g id="ytick_6">
+     <g id="line2d_18"/>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_19"/>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_20"/>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_21"/>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_22"/>
+    </g>
+   </g>
+   <g id="line2d_23">
+    <path d="M 381.218437 124.742969 
+L 381.218437 15.262969 
+" clip-path="url(#p5a1979e954)" style="fill: none; stroke: #c3c2b7; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="LineCollection_2">
+    <path d="M 381.218437 20.239332 
+L 402.163115 20.239332 
+" clip-path="url(#p5a1979e954)" style="fill: none; stroke: #2a78d6; stroke-width: 1.6"/>
+    <path d="M 381.218437 45.121151 
+L 343.748224 45.121151 
+" clip-path="url(#p5a1979e954)" style="fill: none; stroke: #2a78d6; stroke-width: 1.6"/>
+    <path d="M 381.218437 70.002969 
+L 387.014355 70.002969 
+" clip-path="url(#p5a1979e954)" style="fill: none; stroke: #2a78d6; stroke-width: 1.6"/>
+    <path d="M 381.218437 94.884787 
+L 373.029489 94.884787 
+" clip-path="url(#p5a1979e954)" style="fill: none; stroke: #2a78d6; stroke-width: 1.6"/>
+    <path d="M 381.218437 119.766605 
+L 390.645676 119.766605 
+" clip-path="url(#p5a1979e954)" style="fill: none; stroke: #2a78d6; stroke-width: 1.6"/>
+   </g>
+   <g id="line2d_24">
+    <g clip-path="url(#p5a1979e954)">
+     <use xlink:href="#m8239ebcfed" x="402.163115" y="20.239332" style="fill: #2a78d6; stroke: #2a78d6"/>
+     <use xlink:href="#m8239ebcfed" x="343.748224" y="45.121151" style="fill: #2a78d6; stroke: #2a78d6"/>
+     <use xlink:href="#m8239ebcfed" x="387.014355" y="70.002969" style="fill: #2a78d6; stroke: #2a78d6"/>
+     <use xlink:href="#m8239ebcfed" x="373.029489" y="94.884787" style="fill: #2a78d6; stroke: #2a78d6"/>
+     <use xlink:href="#m8239ebcfed" x="390.645676" y="119.766605" style="fill: #2a78d6; stroke: #2a78d6"/>
+    </g>
+   </g>
+   <g id="patch_7">
+    <path d="M 290.708437 124.742969 
+L 471.728437 124.742969 
+" style="fill: none; stroke: #c3c2b7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 7.5px; font-family: 'Segoe UI'; text-anchor: start; fill: #0b0b0b" x="407.466337" y="22.153004" transform="rotate(-0 407.466337 22.153004)">+0.46</text>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 7.5px; font-family: 'Segoe UI'; text-anchor: end; fill: #0b0b0b" x="338.226187" y="47.034822" transform="rotate(-0 338.226187 47.034822)">−0.83</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 7.5px; font-family: 'Segoe UI'; text-anchor: start; fill: #0b0b0b" x="392.532187" y="71.916641" transform="rotate(-0 392.532187 71.916641)">+0.13</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 7.5px; font-family: 'Segoe UI'; text-anchor: end; fill: #0b0b0b" x="367.641937" y="96.798459" transform="rotate(-0 367.641937 96.798459)">−0.18</text>
+   </g>
+   <g id="text_28">
+    <text style="font-size: 7.5px; font-family: 'Segoe UI'; text-anchor: start; fill: #0b0b0b" x="396.152587" y="121.680277" transform="rotate(-0 396.152587 121.680277)">+0.21</text>
+   </g>
+   <g id="text_29">
+    <text style="font-size: 8.5px; font-family: 'Segoe UI'; text-anchor: start; fill: #0b0b0b" x="290.708438" y="9.262969" transform="rotate(-0 290.708438 9.262969)">Rural share of provincial population</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p7dc7670915">
+   <rect x="85.308437" y="15.262969" width="181.02" height="109.48"/>
+  </clipPath>
+  <clipPath id="p5a1979e954">
+   <rect x="290.708438" y="15.262969" width="181.02" height="109.48"/>
+  </clipPath>
+ </defs>
+</svg>

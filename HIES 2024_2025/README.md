@@ -539,6 +539,8 @@ The data confirms the weights are built this way. Adding up the weights gives to
 
 This is a strong check that the weights work as expected.
 
+> **Which population figure to quote.** 240.6 million counts every person listed in the roster (`plist_roster`), including the few listed people who are *not* household members (`s1aq10 = 2`). Counting household members only (`s1aq10 = 1`), as the analysis in `Khalid's Work/` does, gives **239.8 million people in 40.1 million households** (average household size 5.98). In this project the **unit of analysis is the household**, so results are weighted by `weight` and reported as shares of households. The population figure is for context only.
+
 ### 8.5 What the weights look like
 
 | Statistic | Value |

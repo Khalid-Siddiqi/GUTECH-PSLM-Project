@@ -1,0 +1,235 @@
+﻿column,group,source,description,non_missing,example
+hhcode,1 identifiers,"section_info, weight",Household ID = prcode × 1000 + hhno. Use it to join any raw HIES file.,30123,11021001001
+prcode,1 identifiers,"section_info, weight","PSU code (8 digits): province, stratum, urban/rural, quarter, PSU serial",30123,11021001
+hhno,1 identifiers,"section_info, weight",Household number inside the PSU,30123,1
+province,1 identifiers,"section_info, weight",Province from the first digit of prcode; Islamabad shown separately,30123,kp
+province_raw,1 identifiers,"section_info, weight","Province as coded in the raw files (Islamabad counted in Punjab, as in PBS tables)",30123,kp
+region,1 identifiers,"section_info, weight",rural / urban,30123,urban
+stratum,1 identifiers,"section_info, weight",Sampling stratum = first 3 digits of prcode (158 strata),30123,110
+quarter,1 identifiers,"section_info, weight","Survey quarter (1-4), 5th digit of prcode",30123,1
+interview_date,1 identifiers,"section_info, weight",Date of interview (enum_day/month/year),30123,2024-10-19 00:00:00
+weight,1 identifiers,"section_info, weight",HOUSEHOLD WEIGHT: number of Pakistani households this household represents. Use for all % of households.,30123,439.7
+pop_weight,1 identifiers,weight × roster,weight × hhsize. ONLY for stating a population total; do not use for household shares.,30123,3077.9000854492188
+hhsize,2 members,plist_roster (members: s1aq10 = 1),Number of household members,30123,7
+n_male,2 members,plist_roster (members: s1aq10 = 1),Male members,30123,4
+n_female,2 members,plist_roster (members: s1aq10 = 1),Female members,30123,3
+n_age_0_4,2 members,plist_roster (members: s1aq10 = 1),Members aged 0-4,30123,1
+n_age_5_14,2 members,plist_roster (members: s1aq10 = 1),Members aged 5-14,30123,3
+n_age_15_64,2 members,plist_roster (members: s1aq10 = 1),Members aged 15-64,30123,3
+n_age_65plus,2 members,plist_roster (members: s1aq10 = 1),Members aged 65+,30123,0
+n_women_15_49,2 members,plist_roster (members: s1aq10 = 1),Female members aged 15-49,30123,2
+n_temporarily_absent,2 members,plist_roster (members: s1aq10 = 1),Members temporarily absent at the interview (s1aq04 = 2),30123,0
+dependency_ratio,2 members,plist_roster (members: s1aq10 = 1),(members aged 0-14 + 65+) ÷ members aged 15-64; blank if no member is 15-64,29883,1.3333333333333333
+n_non_members_listed,2 members,plist_roster (members: s1aq10 = 1),People listed in the roster who are NOT household members (s1aq10 = 2); not counted anywhere else,30123,0
+head_sex,2 members,plist_roster (members: s1aq10 = 1),Sex of the household head,30119,male
+head_age,2 members,plist_roster (members: s1aq10 = 1),Age of the household head (years),30119,52.0
+head_marital_status,2 members,plist_roster (members: s1aq10 = 1),Marital status of the household head,30119,currently married
+head_literate,3 education,sec_2ab_education (members only),Head can read and write a simple statement (s2aq01 = 1 and s2aq02 = 1),30119,yes
+head_years_schooling,3 education,sec_2ab_education (members only),"Head's years of schooling, from the highest grade completed (s2bq05)",29971,8.0
+head_education,3 education,sec_2ab_education (members only),Head's education level: none / primary / middle / matric / intermediate / graduate or higher,29971,middle (6-8)
+n_literate_10plus,3 education,sec_2ab_education (members only),Members aged 10+ who can read and write,30123,5.0
+n_age_5_16,3 education,sec_2ab_education (members only),Members aged 5-16 (with an education record),30123,4.0
+n_age_5_16_in_school,3 education,sec_2ab_education (members only),Members aged 5-16 currently attending school (s2bq01 = 3),30123,4.0
+max_years_schooling,3 education,sec_2ab_education (members only),Highest years of schooling of any member,30121,8.0
+n_age_10plus,3 education,sec_2ab_education (members only),Members aged 10+,30123,5
+share_literate_10plus,3 education,sec_2ab_education (members only),n_literate_10plus ÷ n_age_10plus,30123,1.0
+head_working,4 work,sec_1b_emp_income (age 10+),"Head has paid work, unpaid family work, a business or farm (s1bq01)",30119,no
+head_employment_status,4 work,sec_1b_emp_income (age 10+),Head's employment status (s1bq02),30113,pensioner / retired
+n_working,4 work,sec_1b_emp_income (age 10+),Members aged 10+ who work (s1bq01 = 1),30123,0.0
+n_earners,4 work,sec_1b_emp_income (age 10+),Members with cash income from work or pension above 0,30123,1
+income_cash_month,4 work,sec_1b_emp_income (age 10+),"Household CASH income from work and pensions, Rs per month (Section 1B; as in Experiment 1)",30123,20000.0
+income_main_earner_month,4 work,sec_1b_emp_income (age 10+),"Cash income of the household's highest earner, Rs per month",30123,20000.0
+n_own_mobile,5 ict,sec_02c_ict (members),"Members who own a mobile or smartphone (s2cq02 = 1, 2, 3)",30123,1.0
+n_own_smartphone,5 ict,sec_02c_ict (members),"Members who own a smartphone (s2cq02 = 2, 3)",30123,0.0
+n_used_internet,5 ict,sec_02c_ict (members),Members who used the internet in the last 3 months (s2cq05 = 1),30123,0.0
+n_bank_or_digital_account,5 ict,sec_02c_ict (members),"Members with a bank or digital (Easypaisa, JazzCash) account (s2cq15 = 1, 2, 3)",30123,1.0
+fstatus,6 interview,section_info,Interview status (all households: completed),30123,completed
+s5m1q01,7 housing (5M1),sec_05m1_housingchar,what is your present occupancy status?,30123,owner occupied (not self-hired)
+s5m1q02,7 housing (5M1),sec_05m1_housingchar,gender of owner,30123,male
+s5m1q03,7 housing (5M1),sec_05m1_housingchar,what is the dwelling type?,30123,independent house / compound
+s5m1q03ot,7 housing (5M1),sec_05m1_housingchar,"Text written for 'other (specify)', see s5m1q03",128,1.0
+s5m1q04,7 housing (5M1),sec_05m1_housingchar,how many rooms are there in this residential building?,30123,2
+s5m1q05,7 housing (5M1),sec_05m1_housingchar,which main material is used for floor?,30123,ceramic tiles/marbles/chips
+s5m1q05ot,7 housing (5M1),sec_05m1_housingchar,"Text written for 'other (specify)', see s5m1q05",97,64.0
+s5m1q06,7 housing (5M1),sec_05m1_housingchar,which main material is used for roof?,30123,metal/tin/girders/t-iron
+s5m1q06ot,7 housing (5M1),sec_05m1_housingchar,"Text written for 'other (specify)', see s5m1q06",176,14.0
+s5m1q07,7 housing (5M1),sec_05m1_housingchar,which main material is used for walls?,30123,stone
+s5m1q07ot,7 housing (5M1),sec_05m1_housingchar,"Text written for 'other (specify)', see s5m1q07",107,19.0
+s5m1q08,7 housing (5M1),sec_05m1_housingchar,what is the main fuel used for cooking?,30123,fire-wood
+s5m1q08ot,7 housing (5M1),sec_05m1_housingchar,"Text written for 'other (specify)', see s5m1q08",336,23.0
+s5m1q09,7 housing (5M1),sec_05m1_housingchar,what is the main fuel used for heating?,30123,other(please explain)
+s5m1q09ot,7 housing (5M1),sec_05m1_housingchar,"Text written for 'other (specify)', see s5m1q09",2523,13.0
+s5m1q10,7 housing (5M1),sec_05m1_housingchar,what is main fuel used for lighting?,30123,electricity (main grid)
+s5m1q10ot,7 housing (5M1),sec_05m1_housingchar,"Text written for 'other (specify)', see s5m1q10",1378,27.0
+s5m1q111a,7 housing (5M1),sec_05m1_housingchar,does this household have internet facility? yes=1 and no=2,30123,no
+s5m1q111b,7 housing (5M1),sec_05m1_housingchar,number of internet connections,20212,1.0
+s5m1q112a,7 housing (5M1),sec_05m1_housingchar,does this household have mobile phone (simple) facility? yes=1 and no=2,30123,yes
+s5m1q112b,7 housing (5M1),sec_05m1_housingchar,number/quantity?,21536,1.0
+s5m1q113a,7 housing (5M1),sec_05m1_housingchar,does this household have smart phone facility?,30123,no
+s5m1q113b,7 housing (5M1),sec_05m1_housingchar,number/quantity?,18227,4.0
+s5m1q114a,7 housing (5M1),sec_05m1_housingchar,does this household have landline/wireless phone facility? yes=1 and no=2,30123,2
+s5m1q114b,7 housing (5M1),sec_05m1_housingchar,number/quantity?,173,1.0
+s5m1q115a,7 housing (5M1),sec_05m1_housingchar,does this household have computer desktopsfacility? yes=1 and no=2,30123,no
+s5m1q115b,7 housing (5M1),sec_05m1_housingchar,number/quantity?,806,1.0
+s5m1q116a,7 housing (5M1),sec_05m1_housingchar,does this household have laptop/notebook facility? yes=1 and no=2,30123,2
+s5m1q116b,7 housing (5M1),sec_05m1_housingchar,number/quantity?,1998,1.0
+s5m1q117a,7 housing (5M1),sec_05m1_housingchar,does this household have tablet/i-pad facility? yes=1 and no=2,30123,2
+s5m1q117b,7 housing (5M1),sec_05m1_housingchar,number/quantity?,584,1.0
+s5m1q118a,7 housing (5M1),sec_05m1_housingchar,does this household have radio? yes=1 and no=2,30123,no
+s5m1q118b,7 housing (5M1),sec_05m1_housingchar,number/quantity?,468,1.0
+s5m1q119a,7 housing (5M1),sec_05m1_housingchar,does this household have television? yes=1 and no=2,30123,no
+s5m1q119b,7 housing (5M1),sec_05m1_housingchar,number/quantity,7983,1.0
+s5m1q11b1,7 housing (5M1),sec_05m1_housingchar,cable tv(catv),5114,1.0
+s5m1q11b2,7 housing (5M1),sec_05m1_housingchar,direct-to-home (dth) satellite services,4076,1.0
+s5m1q11b3,7 housing (5M1),sec_05m1_housingchar,internet-protocoltv (iptv),2154,1.0
+s5m1q11b4,7 housing (5M1),sec_05m1_housingchar,dogital terrestrial tv(dtt),1822,1.0
+s5m1q121a,7 housing (5M1),sec_05m1_housingchar,what type/s of internet services are used for internet access at home cable/wir,11907,2.0
+s5m1q121b,7 housing (5M1),sec_05m1_housingchar,no of connections,3122,1.0
+s5m1q122a,7 housing (5M1),sec_05m1_housingchar,what type/s of internet services are used for internet access at home wireless p,11895,2.0
+s5m1q122b,7 housing (5M1),sec_05m1_housingchar,no of connections,1003,1.0
+s5m1q123a,7 housing (5M1),sec_05m1_housingchar,"what type/s of internet services are used for internet access at home, mobile c",11901,yes
+s5m1q123b,7 housing (5M1),sec_05m1_housingchar,no of connections,10764,1.0
+s5m1q131,7 housing (5M1),sec_05m1_housingchar,do not need the internet,6244,1.0
+s5m1q132,7 housing (5M1),sec_05m1_housingchar,have access to the internet elsewhere,848,2.0
+s5m1q133,7 housing (5M1),sec_05m1_housingchar,cost of the equipment is too high,2523,3.0
+s5m1q134,7 housing (5M1),sec_05m1_housingchar,cost of the service is too high,2098,4.0
+s5m1q135,7 housing (5M1),sec_05m1_housingchar,privacy or security concerns,212,5.0
+s5m1q136,7 housing (5M1),sec_05m1_housingchar,internet service is not available in the area,1213,6.0
+s5m1q137,7 housing (5M1),sec_05m1_housingchar,internet service is available but it does not correspond to household needs (e.,361,7.0
+s5m1q138,7 housing (5M1),sec_05m1_housingchar,cultural reasons (e.g. exposure to harmful content),345,8.0
+s5m1q139,7 housing (5M1),sec_05m1_housingchar,no electricity in the household,895,9.0
+s5m1q1310,7 housing (5M1),sec_05m1_housingchar,"other reason, specify",365,10.0
+s5m1q1310t,7 housing (5M1),sec_05m1_housingchar,"Text written for 'other (specify)', see s5m1q1310",508,20.0
+s5m1q14,7 housing (5M1),sec_05m1_housingchar,during the last 30 days has this household been visited by lady health visitor (,30123,no
+s5m1q15a,7 housing (5M1),sec_05m1_housingchar,is there all-season road near your house?,30123,yes
+s5m1q15b,7 housing (5M1),sec_05m1_housingchar,if yes in 15a then how far it is in km?,27665,0-0.5 km
+s5m1q161a,7 housing (5M1),sec_05m1_housingchar,bus/van/ suzuki etc,30118,yes
+s5m1q161b,7 housing (5M1),sec_05m1_housingchar,distance in kms,26979,0-0.5 km
+s5m1q161c,7 housing (5M1),sec_05m1_housingchar,can you have  access public transport by walk?,26979,1.0
+s5m1q162a,7 housing (5M1),sec_05m1_housingchar,metro/ orange line,30118,2.0
+s5m1q162b,7 housing (5M1),sec_05m1_housingchar,distance in kms,3523,0-0.5 km
+s5m1q162c,7 housing (5M1),sec_05m1_housingchar,can you have  access public transport by walk?,3523,1.0
+s5m1q163a,7 housing (5M1),sec_05m1_housingchar,train (inter city ),30113,2.0
+s5m1q163b,7 housing (5M1),sec_05m1_housingchar,distance in kms,6458,0-0.5 km
+s5m1q163c,7 housing (5M1),sec_05m1_housingchar,can you have  access public transport by walk?,6457,1.0
+s5m2q01,8 water & sanitation (5M2),sec_05m2_watersanitation,what is the main source of drinking water for the household?,30123,piped water
+s5m2q01ot,8 water & sanitation (5M2),sec_05m2_watersanitation,"Text written for 'other (specify)', see s5m2q01",20,3.0
+s5m2q02,8 water & sanitation (5M2),sec_05m2_watersanitation,who installed the water delivery system?,27274,"government(phe, lg, district/union/village council)"
+s5m2q03,8 water & sanitation (5M2),sec_05m2_watersanitation,on average how much time spent on a round trip to fetch the drinking water?,10532,31-45 min
+s5m2q04,8 water & sanitation (5M2),sec_05m2_watersanitation,do you do something to make water safer to drink?,10532,no
+s5m2q05,8 water & sanitation (5M2),sec_05m2_watersanitation,what you actually do to make water safer to drink?,21645,others(specify... )
+s5m2q05ot,8 water & sanitation (5M2),sec_05m2_watersanitation,"Text written for 'other (specify)', see s5m2q05",6803,3.0
+s5m2q06,8 water & sanitation (5M2),sec_05m2_watersanitation,is sufficient water available for drinking when needed?,30122,yes
+s5m2q07,8 water & sanitation (5M2),sec_05m2_watersanitation,do you normally pay for water used by your dwelling?,30123,no
+s5m2q08,8 water & sanitation (5M2),sec_05m2_watersanitation,how much do you normally pay monthly for water (rs.)?,5849,300.0
+s5m2q09,8 water & sanitation (5M2),sec_05m2_watersanitation,are you willing to pay for an improved water supply system?,30123,no
+s5m2q10,8 water & sanitation (5M2),sec_05m2_watersanitation,what type of toilet is used by your household?,30123,flush connected to open  drain
+s5m2q10ot,8 water & sanitation (5M2),sec_05m2_watersanitation,"Text written for 'other (specify)', see s5m2q10",222,7.0
+s5m2q11,8 water & sanitation (5M2),sec_05m2_watersanitation,where do the household members go for their defecation?,2820,fields/open places
+s5m2q12,8 water & sanitation (5M2),sec_05m2_watersanitation,have your septic tank or pit latrine ever been emptied?,16247,never required emptying
+s5m2q13,8 water & sanitation (5M2),sec_05m2_watersanitation,"the last time it was emptied, where were the contents emptied to?",992,others (specify)
+s5m2q13ot,8 water & sanitation (5M2),sec_05m2_watersanitation,"Text written for 'other (specify)', see s5m2q13",1,1.0
+s5m2q14,8 water & sanitation (5M2),sec_05m2_watersanitation,do you share this toilet facility with others who are not members of your househ,29940,no
+s5m2q15,8 water & sanitation (5M2),sec_05m2_watersanitation,is your house connected with drainage / sewerage system?,29465,"no, no system"
+s5m2q16,8 water & sanitation (5M2),sec_05m2_watersanitation,what is the main source of water used for the cooking etc .by household?,30123,piped water
+s5m2q16ot,8 water & sanitation (5M2),sec_05m2_watersanitation,"Text written for 'other (specify)', see s5m2q16",139,13.0
+s5m2q17a,8 water & sanitation (5M2),sec_05m2_watersanitation,do you have following facilities in your dwelling?,30123,with soap
+s5m2q17b,8 water & sanitation (5M2),sec_05m2_watersanitation,do you have following facilities in your dwelling?,30123,specific place with water
+s5m2q18,8 water & sanitation (5M2),sec_05m2_watersanitation,do you use soap or hand-wash for hand washing before and after meal or using toi,30123,yes
+s5m3q01,9 waste (5M3),sec_05m3_wastemanagment,how your household waste been collected or disposed of?,30123,open space
+s5m3q01ot,9 waste (5M3),sec_05m3_wastemanagment,"Text written for 'other (specify)', see s5m3q01",106,46.0
+s5m3q02,9 waste (5M3),sec_05m3_wastemanagment,on average how much time spend on a round trip to the nearest public bin/collec,30123,1-5 minutes
+s5m3q03,9 waste (5M3),sec_05m3_wastemanagment,if there are public bins or collection point how often are the nearest public bi,16485,other...
+s5m3q03ot,9 waste (5M3),sec_05m3_wastemanagment,"Text written for 'other (specify)', see s5m3q03",2247,4.0
+s5m3q04,9 waste (5M3),sec_05m3_wastemanagment,how much do you pay for waste collection and disposal services if nothing note,5291,500.0
+fies_q1,10 food insecurity (5M4),sec_05m4_fies,you or others in yours household worried about not having enough food to eat bec,30123,yes
+fies_q2,10 food insecurity (5M4),sec_05m4_fies,"still thinking about the last 12 months, was there a time when you or others in",30123,yes
+fies_q3,10 food insecurity (5M4),sec_05m4_fies,was there a time when you or others in your household ate only a few kinds of fo,30123,yes
+fies_q4,10 food insecurity (5M4),sec_05m4_fies,was there a time when you or others in your household had to skip a meal because,30123,yes
+fies_q5,10 food insecurity (5M4),sec_05m4_fies,"still thinking about the last 12 months, was there a time when you or others in",30123,don't know
+fies_q6,10 food insecurity (5M4),sec_05m4_fies,was there a time when your household ran out of food because of a lack of money,30123,don't know
+fies_q7,10 food insecurity (5M4),sec_05m4_fies,was there a time when you or others in your household were hungry but did not ea,30123,don't know
+fies_q8,10 food insecurity (5M4),sec_05m4_fies,was there a time when you or others in your household went without eating for a,30123,don't know
+fies_score,10 food insecurity (5M4),sec_05m4_fies,Number of 'yes' answers to the 8 FIES questions (0 = food secure ... 8 = most severe),30123,4
+exp_food,11 spending (6A),sec_6a_consum_exp,"Spending on food and non-alcoholic drinks, Rs per month (COICOP division)",30123,20867.559523809527
+exp_tobacco,11 spending (6A),sec_6a_consum_exp,"Spending on tobacco, Rs per month (COICOP division)",30123,0.0
+exp_clothing,11 spending (6A),sec_6a_consum_exp,"Spending on clothing, Rs per month (COICOP division)",30123,2650.0
+exp_housing_utilities,11 spending (6A),sec_6a_consum_exp,"Spending on rent (incl. owned home), water, electricity, gas, fuel, Rs per month (COICOP division)",30123,19850.0
+exp_furnishings,11 spending (6A),sec_6a_consum_exp,"Spending on furnishings, appliances, household goods, Rs per month (COICOP division)",30123,530.0
+exp_health,11 spending (6A),sec_6a_consum_exp,"Spending on health, Rs per month (COICOP division)",30123,10250.0
+exp_transport,11 spending (6A),sec_6a_consum_exp,"Spending on transport, Rs per month (COICOP division)",30123,1933.333333333333
+exp_communication,11 spending (6A),sec_6a_consum_exp,"Spending on communication, Rs per month (COICOP division)",30123,0.0
+exp_recreation,11 spending (6A),sec_6a_consum_exp,"Spending on recreation, Rs per month (COICOP division)",30123,670.8333333333333
+exp_education,11 spending (6A),sec_6a_consum_exp,"Spending on education, Rs per month (COICOP division)",30123,1500.0
+exp_restaurants_hotels,11 spending (6A),sec_6a_consum_exp,"Spending on restaurants and hotels, Rs per month (COICOP division)",30123,0.0
+exp_personal_care_misc,11 spending (6A),sec_6a_consum_exp,"Spending on personal care and miscellaneous, Rs per month (COICOP division)",30123,1166.6666666666665
+exp_total,11 spending (6A),sec_6a_consum_exp,"TOTAL household consumption spending, Rs per month (bought + in kind; as in Experiment 1)",30123,59418.39285714286
+exp_bought,11 spending (6A),sec_6a_consum_exp,"Part of exp_total paid in cash (v1), Rs per month",30123,33801.72619047619
+inkind_wages,11 spending (6A),sec_6a_consum_exp,"Consumption received as wages in kind (v2), Rs per month",30123,0.0
+inkind_own_production,11 spending (6A),sec_6a_consum_exp,"Consumption from own production (v3), incl. owned-home rent, Rs per month",30123,13750.0
+inkind_gifts,11 spending (6A),sec_6a_consum_exp,"Consumption received as gifts or assistance (v4), Rs per month",30123,11866.666666666666
+exp_imputed_rent,11 spending (6A),sec_6a_consum_exp,"Rental value of an owner-occupied home (item 42101), Rs per month; included in exp_housing_utilities",30123,13750.0
+exp_per_person,11 spending (6A),sec_6a_consum_exp,"exp_total ÷ hhsize, Rs per person per month (used to rank households)",30123,8488.341836734695
+exp_food_share,11 spending (6A),sec_6a_consum_exp,exp_food ÷ exp_total,30123,0.3511969698335753
+quintile_hh,11 spending (6A),sec_6a_consum_exp,"Spending quintile (1 = poorest), 20% of HOUSEHOLDS each, by exp_per_person. PBS report quintiles are 20% of POPULATION instead.",30123,2
+own_radio,12 durables (7),sec_7,"Number of radio owned now (item 701, s7m_b)",30123,0.0
+own_television,12 durables (7),sec_7,"Number of television owned now (item 702, s7m_b)",30123,0.0
+own_lcd_led,12 durables (7),sec_7,"Number of lcd led owned now (item 703, s7m_b)",30123,0.0
+own_refrigerator,12 durables (7),sec_7,"Number of refrigerator owned now (item 704, s7m_b)",30123,1.0
+own_freezer,12 durables (7),sec_7,"Number of freezer owned now (item 705, s7m_b)",30123,0.0
+own_washing_machine,12 durables (7),sec_7,"Number of washing machine owned now (item 706, s7m_b)",30123,0.0
+own_dryer,12 durables (7),sec_7,"Number of dryer owned now (item 707, s7m_b)",30123,0.0
+own_air_conditioner,12 durables (7),sec_7,"Number of air conditioner owned now (item 708, s7m_b)",30123,0.0
+own_air_cooler,12 durables (7),sec_7,"Number of air cooler owned now (item 709, s7m_b)",30123,0.0
+own_fan,12 durables (7),sec_7,"Number of fan owned now (item 710, s7m_b)",30123,2.0
+own_stove,12 durables (7),sec_7,"Number of stove owned now (item 711, s7m_b)",30123,0.0
+own_cooking_range,12 durables (7),sec_7,"Number of cooking range owned now (item 712, s7m_b)",30123,0.0
+own_microwave,12 durables (7),sec_7,"Number of microwave owned now (item 713, s7m_b)",30123,0.0
+own_sewing_machine,12 durables (7),sec_7,"Number of sewing machine owned now (item 714, s7m_b)",30123,1.0
+own_knitting_machine,12 durables (7),sec_7,"Number of knitting machine owned now (item 715, s7m_b)",30123,0.0
+own_iron,12 durables (7),sec_7,"Number of iron owned now (item 716, s7m_b)",30123,1.0
+own_water_filter,12 durables (7),sec_7,"Number of water filter owned now (item 717, s7m_b)",30123,0.0
+own_donkey_pump,12 durables (7),sec_7,"Number of donkey pump owned now (item 718, s7m_b)",30123,0.0
+own_turbine,12 durables (7),sec_7,"Number of turbine owned now (item 719, s7m_b)",30123,0.0
+own_chair,12 durables (7),sec_7,"Number of chair owned now (item 720, s7m_b)",30123,2.0
+own_table,12 durables (7),sec_7,"Number of table owned now (item 721, s7m_b)",30123,2.0
+own_ups,12 durables (7),sec_7,"Number of ups owned now (item 722, s7m_b)",30123,0.0
+own_generator,12 durables (7),sec_7,"Number of generator owned now (item 723, s7m_b)",30123,0.0
+own_solar_panel,12 durables (7),sec_7,"Number of solar panel owned now (item 724, s7m_b)",30123,0.0
+own_heater,12 durables (7),sec_7,"Number of heater owned now (item 725, s7m_b)",30123,0.0
+own_geyser,12 durables (7),sec_7,"Number of geyser owned now (item 726, s7m_b)",30123,0.0
+own_bicycle,12 durables (7),sec_7,"Number of bicycle owned now (item 727, s7m_b)",30123,0.0
+own_motorcycle,12 durables (7),sec_7,"Number of motorcycle owned now (item 728, s7m_b)",30123,0.0
+own_scooter,12 durables (7),sec_7,"Number of scooter owned now (item 729, s7m_b)",30123,0.0
+own_car,12 durables (7),sec_7,"Number of car owned now (item 730, s7m_b)",30123,0.0
+own_van_truck_bus,12 durables (7),sec_7,"Number of van truck bus owned now (item 731, s7m_b)",30123,0.0
+own_motor_boat,12 durables (7),sec_7,"Number of motor boat owned now (item 732, s7m_b)",30123,0.0
+own_tractor_trolley,12 durables (7),sec_7,"Number of tractor trolley owned now (item 733, s7m_b)",30123,0.0
+own_watch,12 durables (7),sec_7,"Number of watch owned now (item 734, s7m_b)",30123,1.0
+own_animal_cart,12 durables (7),sec_7,"Number of animal cart owned now (item 735, s7m_b)",30123,0.0
+tr_remit_domestic,13 transfers (8A),sec_8a (yearly ÷ 12),"Remittances received from within Pakistan (802), Rs per month",30123,0.0
+tr_remit_abroad,13 transfers (8A),sec_8a (yearly ÷ 12),"Remittances received from abroad: bank + hundi + mobile + other (805-808), Rs per month",30123,3500.0
+tr_bisp_govt,13 transfers (8A),sec_8a (yearly ÷ 12),"BISP/Ehsaas and other government assistance (820, 821), Rs per month",30123,0.0
+tr_assistance,13 transfers (8A),sec_8a (yearly ÷ 12),"Assistance received from public and private sector (812, 813), Rs per month",30123,0.0
+tr_boarders_gifts_sold,13 transfers (8A),sec_8a (yearly ÷ 12),"Receipts from boarders, and gifts received in kind but sold (817, 819), Rs per month",30123,0.0
+tr_zakat_usher,13 transfers (8A),sec_8a (yearly ÷ 12),"Zakat/usher received in cash (811), Rs per month. NOT in 'transfers' (kept as in Experiment 1)",30123,0.16666666666666666
+tr_received_total_8a,13 transfers (8A),sec_8a (yearly ÷ 12),"Section 8A part A total as recorded (800): all receipts incl. committees, insurance, inheritance, Rs per month",30123,3500.6666666666665
+tr_paid_total_8a,13 transfers (8A),sec_8a (yearly ÷ 12),"Section 8A part B total as recorded (850): all transfers paid out, Rs per month",30123,0.0
+rent_received,"14 property & savings (9A, 9B)","sec_9a, sec_9b, sec_10a, sec_11","Net rent received: land/buildings (9A) + business assets (11: 288, 289) + farm equipment (10: 197), Rs per month",30123,0.0
+profit_dividends,"14 property & savings (9A, 9B)","sec_9a, sec_9b, sec_10a, sec_11","Profit on savings, dividends, profit on loans given (9B: 953, 960, 970), Rs per month",30123,0.0
+savings_now,"14 property & savings (9A, 9B)","sec_9a, sec_9b, sec_10a, sec_11","Total net savings at present (9B: 951), Rs",30123,0.0
+gold_jewellery_value,"14 property & savings (9A, 9B)","sec_9a, sec_9b, sec_10a, sec_11","Value of gold, silver and jewellery owned (9B: 955), Rs",30123,0.0
+loans_owed_now,"14 property & savings (9A, 9B)","sec_9a, sec_9b, sec_10a, sec_11","Loans currently owed by the household (9B: 963), Rs",30123,450000.0
+farm_crop_value_month,"15 farm & business (10, 11)","sec_10a, sec_10b, sec_11ab","Value of total crop production (10A: 135, s10c3) ÷ 12, Rs per month. Not added to income_full: farm cash income is already in Section 1B.",30123,0.0
+transfers,13 transfers (8A),sec_8a (yearly ÷ 12),"Transfer income used in income_full = 802 + 805-808 + 820-821 + 812-813 + 817 + 819, Rs per month",30123,3500.0
+property_income,"14 property & savings (9A, 9B)","sec_9a, sec_9b, sec_10a, sec_11","rent_received + profit_dividends, Rs per month",30123,0.0
+owns_agri_land,"14 property & savings (9A, 9B)","sec_9a, sec_9b, sec_10a, sec_11","Household owns all or part of agricultural land now (9A: 901, s9aq02a)",30123,no
+agri_land_acres,"14 property & savings (9A, 9B)","sec_9a, sec_9b, sec_10a, sec_11","Acres of agricultural land (9A: 901, s9aq02b)",30123,0.0
+owns_residential_property,"14 property & savings (9A, 9B)","sec_9a, sec_9b, sec_10a, sec_11","Household owns a residential building now (9A: 903, s9aq02a)",30123,yes
+farm_household,"15 farm & business (10, 11)","sec_10a, sec_10b, sec_11ab",Household has a crop farming sheet (Section 10A),30123,no
+livestock_household,"15 farm & business (10, 11)","sec_10a, sec_10b, sec_11ab",Household has a livestock sheet (Section 10B),30123,no
+n_nonfarm_businesses,"15 farm & business (10, 11)","sec_10a, sec_10b, sec_11ab",Number of non-farm businesses (Section 11 sheets),30123,0.0
+income_in_kind,16 income totals,derived,"inkind_wages + inkind_own_production + inkind_gifts, Rs per month",30123,25616.666666666664
+income_full,16 income totals,derived,"FULL household income = income_cash_month + transfers + property_income + income_in_kind, Rs per month (as in Experiment 1)",30123,49116.666666666664
+income_full_per_person,16 income totals,derived,"income_full ÷ hhsize, Rs per person per month",30123,7016.666666666666
+head_idc,2 members,plist_roster (members: s1aq10 = 1),"Person ID (idc) of the household head, to join person files",30119,1.0
