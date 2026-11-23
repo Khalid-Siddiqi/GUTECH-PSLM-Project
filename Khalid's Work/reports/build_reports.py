@@ -282,20 +282,30 @@ area_table = table("<b>Table 3.</b> Class thresholds when each area is classifie
                    [[f"{NAMES[i]} | {NAMES[i + 1]}", cell(cuts[i]), cell(U["cuts"][i]), cell(R["cuts"][i]), f"{ur_ratio[i]:.2f}"] for i in range(4)],
                    note=f"Urban: {U['n']:,} sampled households ({U['hh']:.1f} million); rural: {R['n']:,} ({R['hh']:.1f} million). Same K-means method as steps 3–4, weighted by the household weight.").replace('<div class="tbl">', '<div class="tbl nowrap">')
 
-fig, axes = plt.subplots(1, 2, figsize=(6.8, 1.8), sharey=True)
-xpos = np.arange(5)
-for ax, key, title in [(axes[0], "own", "Each area's own thresholds"), (axes[1], "nat", "National thresholds")]:
-    for j, (A, col, lab) in enumerate([(U, BLUE, "Urban"), (R, ORANGE, "Rural")]):
-        bars = ax.bar(xpos + (j - 0.5) * 0.38, A[key], 0.36, color=col, label=lab, linewidth=0)
-        for b, v in zip(bars, A[key]):
-            ax.text(b.get_x() + b.get_width() / 2, v + 0.8, f"{v:.0f}", ha="center", va="bottom", fontsize=6.8, color=INK)
-    ax.set_title(title, fontsize=8.5, loc="left", color=INK, fontweight="bold")
-    ax.set_xticks(xpos, [n.replace("-", "-\n") for n in NAMES], fontsize=7.5)
-    ax.set_ylim(0, 42)
-    hgrid(ax)
-axes[0].set_ylabel("% of households in the area")
-axes[0].legend(loc="upper right", handlelength=1, handleheight=1)
-fig.tight_layout(w_pad=1.5)
+# Figure 2: one 100% bar per area, split into the five classes (same colours as Figure 1).
+# Top block: everyone judged against the national thresholds. Bottom block: each area judged only against itself.
+fig, ax = plt.subplots(figsize=(6.8, 1.9))
+BARS = [("Urban", U["nat"]), ("Rural", R["nat"]), ("Urban", U["own"]), ("Rural", R["own"])]
+ypos = [4.3, 3.4, 1.4, 0.5]
+TEXT_ON = ["#0b0b0b", "#0b0b0b", "#0b0b0b", "#ffffff", "#ffffff"]          # dark text on light fills, white on dark
+for y, (lab, vals) in zip(ypos, BARS):
+    left = 0
+    for k, v in enumerate(vals):
+        ax.barh(y, v, 0.72, left=left, color=CLASS_COLORS[k], edgecolor="white", linewidth=1.2,
+                label=NAMES[k] if y == ypos[0] else None)
+        if v >= 4:
+            ax.text(left + v / 2, y, f"{v:.0f}%", ha="center", va="center", fontsize=7.2, color=TEXT_ON[k], fontweight="bold")
+        else:
+            ax.text(101, y, f"{v:.0f}%", ha="left", va="center", fontsize=7.2, color=INK, fontweight="bold")
+        left += v
+    ax.text(-1.5, y, lab, ha="right", va="center", fontsize=8, color=INK)
+ax.text(0, 5.05, "A.  Same thresholds for everyone: " + ", ".join(f"\\${day_usd(c):.2f}" for c in cuts) + " (Table 1)", fontsize=8, color=INK, fontweight="bold", va="bottom")
+ax.text(0, 2.15, "B.  Own thresholds for each area: urban " + ", ".join(f"\\${day_usd(c):.2f}" for c in U["cuts"]) + ";  rural " + ", ".join(f"\\${day_usd(c):.2f}" for c in R["cuts"]), fontsize=8, color=INK, fontweight="bold", va="bottom")
+ax.set_xlim(0, 105); ax.set_ylim(0, 5.6)
+ax.set_yticks([]); ax.set_xticks([])
+for sp in ax.spines.values():
+    sp.set_visible(False)
+ax.legend(loc="upper center", bbox_to_anchor=(0.48, -0.02), ncol=5, handlelength=1, handleheight=1, columnspacing=1.4, fontsize=7.5)
 svg_area = save(fig, "classes_urban_rural")
 
 # imputed consumption by area, and its total share by (national) class within each area
@@ -368,18 +378,17 @@ body1 = f"""
 {imp_table}
 
 <h2 style="break-before: page; margin-top: 0"><span class="n">5</span>Urban and rural households classified separately</h2>
-<p>Steps 1–5 were repeated separately for urban and for rural households, so that each area gets its own five classes and thresholds.</p>
+<p>Steps 1–5 were repeated separately for urban and for rural households (Table 3).</p>
 {area_table}
-{figure("<b>Figure 2.</b> Share of households in each class, urban and rural", svg_area,
-        "Left: each area classified on its own (Table 3). Right: both areas classified with the national thresholds (Table 1). Source: HIES 2024-25, household-weighted.")}
+{figure("<b>Figure 2.</b> How urban and rural households divide into the five classes (% of households in the area)", svg_area,
+        "Each bar = 100% of the area’s households; thresholds in 2023 PPP $ per person per day. A: Table 1 classes split by area. B: each area ranked against itself. Source: HIES 2024-25, household-weighted.")}
 <ul>
-  <li><b>The class structure is the same.</b> Classified on their own, urban households split {" / ".join(f"{v:.0f}" for v in U["own"])}% and rural households {" / ".join(f"{v:.0f}" for v in R["own"])}% (lower to upper), close to the national {" / ".join(f"{v:.0f}" for v in share)}%.</li>
-  <li><b>The dollar levels are not.</b> Urban thresholds are {(U["cuts"] / cuts).min() * 100 - 100:.0f}–{(U["cuts"] / cuts).max() * 100 - 100:.0f}% above the national ones and rural thresholds {100 - (R["cuts"] / cuts).max() * 100:.0f}–{100 - (R["cuts"] / cuts).min() * 100:.0f}% below. The urban/rural ratio rises from {ur_ratio[0]:.1f} at the bottom to {ur_ratio[-1]:.1f} at the top, so higher urban prices alone cannot explain the gap.</li>
-  <li><b>With the national thresholds,</b> {R["nat"][0]:.0f}% of rural households are lower class and {R["nat"][4]:.1f}% upper class, against {U["nat"][0]:.1f}% and {U["nat"][4]:.1f}% of urban households. {U["same"]:.0f}% of urban and {R["same"]:.0f}% of rural households keep their national class when classified within their area.</li>
-  <li><b>Which to use.</b> HIES has no regional price index, so part of the gap is the higher urban cost of living. Use the national thresholds for a Pakistan-wide picture, the area thresholds to compare households with their neighbours.</li>
+  <li><b>Compared with all of Pakistan (A), the areas differ.</b> City households spend more, so they sit higher: {U["nat"][4]:.1f}% of urban households are upper class against {R["nat"][4]:.1f}% of rural ones, and {R["nat"][0]:.0f}% of rural households are lower class against {U["nat"][0]:.1f}% of urban ones.</li>
+  <li><b>Compared only with their own area (B), they split the same way,</b> close to the national {" / ".join(f"{v:.0f}" for v in share)}%. Inequality within cities and within villages has the same shape; only the level differs. Urban thresholds are {ur_ratio[0]:.1f} times the rural ones at the bottom and {ur_ratio[-1]:.1f} times at the top, so higher urban prices alone cannot explain the gap.</li>
+  <li><b>Which to use.</b> HIES has no regional price index, so part of the gap is the higher urban cost of living. Use A for a Pakistan-wide picture and B to compare households with their neighbours.</li>
 </ul>
 {area_imp_table}
-<p><b>Imputed consumption differs in kind.</b> In rural areas it is {IR["pct"][-1]:.1f}% of spending, mostly own produce, and stays at {min(IR["by_class"]):.0f}–{max(IR["by_class"]):.0f}% in every class: richer rural households grow less of their food but own more valuable homes. In cities it is {IU["pct"][-1]:.1f}%, mostly the rental value of owned homes, and rises from {IU["by_class"][0]:.0f}% in the lower class to {IU["by_class"][4]:.0f}% in the upper class (national classes).</p>
+<p><b>Overall, imputed consumption is {IR["pct"][-1]:.1f}% of rural and {IU["pct"][-1]:.1f}% of urban household spending</b> ({IMP_AREA["All households"]["pct"][-1]:.1f}% for all households). In rural areas it is mostly own produce and stays at {min(IR["by_class"]):.0f}–{max(IR["by_class"]):.0f}% in every class: richer rural households grow less of their food but own more valuable homes. In cities it is mostly the rental value of owned homes and rises from {IU["by_class"][0]:.0f}% in the lower class to {IU["by_class"][4]:.0f}% in the upper class (national classes).</p>
 """
 to_pdf(page("Consumption-Based Social Classes in Pakistan", "Consumption-Based Social Classes in Pakistan", "Methodology note", body1),
        "classes.html", WORK / "1_social_classes/HOW_CLASSES_ARE_DEFINED.pdf")
