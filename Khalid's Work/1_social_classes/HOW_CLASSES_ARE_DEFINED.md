@@ -78,6 +78,38 @@ The project standard is **2023 US dollars (PPP)**.
 | Middle \| Upper-middle | 19,120 | 9.25 |
 | Upper-middle \| Upper | 40,282 | 19.49 |
 
+## Fixed class lines: $3, $6, $10 and $20
+
+The PDF rounds the K-means thresholds above to fixed lines of **$3, $6, $10 and $20 per person per day (2023 PPP)**, which is Rs 6,201 / 12,402 / 20,671 / 41,341 per person per month in 2024-25 prices. Round lines are easier to use and, because they are fixed in 2023 dollars, they can be applied unchanged to other survey rounds. **85% of households are in the same class as under the exact K-means thresholds.**
+
+| Class | $ per person per day | % of households | Households | People per household |
+|---|---|---:|---:|---:|
+| Lower | below $3 | 11.6% | 4.6 M | 7.7 |
+| Lower-middle | $3 – 6 | 43.8% | 17.6 M | 6.5 |
+| Middle | $6 – 10 | 26.8% | 10.7 M | 5.4 |
+| Upper-middle | $10 – 20 | 13.9% | 5.6 M | 4.6 |
+| Upper | above $20 | 4.0% | 1.6 M | 4.1 |
+
+The tables below on imputed consumption, urban/rural (national-line rows) and durables use these fixed classes in the PDF. The K-means-based figures in this note are given for reference.
+
+### Durable ownership by class (fixed lines)
+
+% of households owning at least one, household-weighted. Only the durables that Ghani (2014, *The Emerging Middle Class in Pakistan*, KSBL Working Paper 2014-11) also reports for PSLM 2010-11 are kept, so the two can be compared. His computer item is left out because HIES 2024-25 records only computer use, not ownership. Mobile phone: at least one member owns one (Section 2C). Other items: owned now (Section 7).
+
+| Item | Lower | Lower-middle | Middle | Upper-middle | Upper | All |
+|---|---:|---:|---:|---:|---:|---:|
+| Mobile phone | 92 | 96 | 98 | 99 | 99 | 97 |
+| Electric fan | 81 | 93 | 97 | 97 | 97 | 94 |
+| Television | 20 | 42 | 64 | 78 | 89 | 52 |
+| Sewing machine | 26 | 49 | 57 | 58 | 51 | 50 |
+| Washing machine | 22 | 52 | 76 | 86 | 92 | 61 |
+| Refrigerator or freezer | 18 | 49 | 75 | 86 | 93 | 59 |
+| Motorcycle or scooter | 33 | 51 | 66 | 74 | 70 | 57 |
+| Air cooler | 4 | 13 | 25 | 36 | 37 | 19 |
+| Air conditioner | 0 | 2 | 10 | 31 | 62 | 10 |
+| Car | 0 | 1 | 5 | 18 | 52 | 7 |
+| Tractor | 0 | 1 | 3 | 3 | 4 | 2 |
+
 ## Imputed (non-cash) consumption in each class
 
 Spending includes goods and services consumed without paying cash, valued by HIES in Section 6A:

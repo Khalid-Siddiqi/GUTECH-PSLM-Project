@@ -27,11 +27,13 @@
 
 $1 (2023 PPP) = Rs 67.96 in 2024-25 prices: the World Bank 2023 PPP factor for private consumption, adjusted by the CPI. Details are in [`HOW_CLASSES_ARE_DEFINED.md`](HOW_CLASSES_ARE_DEFINED.md).
 
+**Fixed class lines used in the PDF: $3 / $6 / $10 / $20** per person per day (2023 PPP), the K-means thresholds above rounded. They give 11.6 / 43.8 / 26.8 / 13.9 / 4.0% of households, and 85% of households keep their K-means class. The PDF ([`HOW_CLASSES_ARE_DEFINED.pdf`](HOW_CLASSES_ARE_DEFINED.pdf)) uses these lines throughout. Its Table 3 profiles each class by durable ownership: for example, a car is owned by 0 / 1 / 5 / 18 / 52% of households from lower to upper class.
+
 - **Most households are in the middle:** 62% are lower-middle or middle. Only 4% form a distinct upper class.
 - **KNN recognises the class** from the spending pattern for 82.9% of households. Almost all of its mistakes are to a neighbouring class.
 - **Clustering on *what* households buy** (12 categories) finds household types, mainly families with or without students, rather than classes.
 - **Spending includes imputed consumption** (owned-home rent, own produce, wages and gifts in kind): 18.5% of household spending, from 17% to 24% by class. Without it, the lower class would be 32% of households instead of 17%. See [`HOW_CLASSES_ARE_DEFINED.md`](HOW_CLASSES_ARE_DEFINED.md).
-- **Urban and rural households classified separately** split into the same class shapes (about 17 / 32 / 28 / 17 / 5%). Urban thresholds, however, are 1.4-1.9 times the rural ones. See the PDF, section 5.
+- **Urban and rural households classified separately** split into the same class shapes (about 17 / 32 / 28 / 17 / 5%). Urban thresholds, however, are 1.4-1.9 times the rural ones. See the PDF, section 6.
 - **Weights are required** for results that describe Pakistan. For these national shares they changed each class by only about 1 point, but they matter more for provinces.
 
 ## Adding income (Section 1B)

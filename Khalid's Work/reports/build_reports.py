@@ -147,14 +147,32 @@ N_HH, N_POP, N_SAMPLE = W.sum(), d.pop_weight.sum(), len(d)
 
 
 # =============================================================================================== REPORT 1: classes
+# ---- per day and in 2023 PPP dollars (project standard: 2023 US dollars)
+# World Bank WDI: PPP conversion factor, private consumption (PA.NUS.PRVT.PP), Pakistan 2023; CPI (FP.CPI.TOTL, 2010 = 100).
+# HIES fieldwork ran Oct 2024 - Jun 2025, so the survey price level is the average of the 2024 and 2025 CPI.
+PPP_2023 = 59.2849                                   # Rs per international $ in 2023 prices
+CPI_2023 = 343.42108
+CPI_HIES = (386.80386 + 400.51819) / 2
+RS_PER_USD23 = PPP_2023 * CPI_HIES / CPI_2023        # Rs per 2023 PPP $ in 2024-25 prices
+DAYS = 365 / 12
+day_rs = lambda v: v / DAYS
+day_usd = lambda v: v / DAYS / RS_PER_USD23
+
+# K-means (Experiment 1) finds the thresholds; they are then rounded to fixed lines in 2023 PPP $ per person per day.
 x = np.log(d.per_person)
 centres = np.array([wmean(x[d.class_A == k], W[d.class_A == k]) for k in range(1, 6)])
-cuts = np.exp((centres[:-1] + centres[1:]) / 2)
-reproduced = (np.searchsorted(cuts, d.per_person, side="right") + 1 == d.class_A).mean() * 100
-share = np.array([W[d.class_A == k].sum() for k in range(1, 6)]) / N_HH * 100
-hh_m = np.array([W[d.class_A == k].sum() for k in range(1, 6)]) / 1e6
-mean_pp = np.array([wmean(d.per_person[d.class_A == k], W[d.class_A == k]) for k in range(1, 6)])
-size_k = np.array([wmean(d.hhsize[d.class_A == k], W[d.class_A == k]) for k in range(1, 6)])
+cuts_km = np.exp((centres[:-1] + centres[1:]) / 2)
+reproduced = (np.searchsorted(cuts_km, d.per_person, side="right") + 1 == d.class_A).mean() * 100
+share_km = np.array([W[d.class_A == k].sum() for k in range(1, 6)]) / N_HH * 100
+
+LINES_USD = np.array([3, 6, 10, 20])                 # the class lines: $ per person per day, 2023 PPP
+cuts = LINES_USD * DAYS * RS_PER_USD23               # the same lines in Rs per person per month, 2024-25 prices
+d["cls"] = np.searchsorted(cuts, d.per_person, side="right") + 1
+km_same = W[d.cls == d.class_A].sum() / N_HH * 100
+share = np.array([W[d.cls == k].sum() for k in range(1, 6)]) / N_HH * 100
+hh_m = np.array([W[d.cls == k].sum() for k in range(1, 6)]) / 1e6
+mean_pp = np.array([wmean(d.per_person[d.cls == k], W[d.cls == k]) for k in range(1, 6)])
+size_k = np.array([wmean(d.hhsize[d.cls == k], W[d.cls == k]) for k in range(1, 6)])
 
 # quintile cut points (household-weighted)
 pp_exact = d.exp_total / d.hhsize
@@ -168,23 +186,12 @@ xc = np.log(np.maximum(d.full_income_pp, p1))
 centres_c = np.array([wmean(xc[d.class_C == k], W[d.class_C == k]) for k in range(1, 6)])
 cuts_c = np.exp((centres_c[:-1] + centres_c[1:]) / 2)
 share_c = np.array([W[d.class_C == k].sum() for k in range(1, 6)]) / N_HH * 100
-same = W[d.class_A == d.class_C].sum() / N_HH * 100
-near = W[(d.class_A - d.class_C).abs() <= 1].sum() / N_HH * 100
-cross = pd.crosstab(d.class_A, d.class_C, values=W, aggfunc="sum", normalize="index").to_numpy() * 100
+# income per person put into classes with the same fixed lines
+inc_cls = np.searchsorted(cuts, d.full_income_pp, side="right") + 1
+same = W[d.cls == inc_cls].sum() / N_HH * 100
+near = W[np.abs(d.cls - inc_cls) <= 1].sum() / N_HH * 100
 
 spend_avg, inc_avg = wmean(d.exp_total, W), wmean(d.income_full, W)
-
-# ---- per day and in 2023 PPP dollars (project standard: 2023 US dollars)
-# World Bank WDI: PPP conversion factor, private consumption (PA.NUS.PRVT.PP), Pakistan 2023; CPI (FP.CPI.TOTL, 2010 = 100).
-# HIES fieldwork ran Oct 2024 - Jun 2025, so the survey price level is the average of the 2024 and 2025 CPI.
-PPP_2023 = 59.2849                                   # Rs per international $ in 2023 prices
-CPI_2023 = 343.42108
-CPI_HIES = (386.80386 + 400.51819) / 2
-RS_PER_USD23 = PPP_2023 * CPI_HIES / CPI_2023        # Rs per 2023 PPP $ in 2024-25 prices
-DAYS = 365 / 12
-day_rs = lambda v: v / DAYS
-day_usd = lambda v: v / DAYS / RS_PER_USD23
-fmt2 = lambda v: f"{v:,.2f}"
 
 # ---- Figure: distribution with cut points
 fig, ax = plt.subplots(figsize=(6.8, 1.65))
@@ -193,7 +200,7 @@ step = (edges[-1] - edges[0]) / 90
 bins = np.unique(np.concatenate([np.linspace(a, b, max(2, int(round((b - a) / step)) + 1)) for a, b in zip(edges[:-1], edges[1:])]))
 widths = np.diff(bins)
 for k in range(1, 6):
-    sel = d.class_A == k
+    sel = d.cls == k
     h, _ = np.histogram(x[sel], bins=bins, weights=W[sel] / 1e6)
     h = h / widths * step
     ax.bar(bins[:-1], h, widths, align="edge", color=CLASS_COLORS[k - 1], label=NAMES[k - 1], linewidth=0)
@@ -205,7 +212,7 @@ for k in range(1, 6):
 for c in cuts:
     ax.axvline(np.log(c), color=INK, lw=0.8, ls=(0, (3, 2)), zorder=3)
 top = ax.secondary_xaxis("top")                      # threshold values on their own scale, so they never collide with class names
-top.set_xticks(np.log(cuts), [f"${day_usd(c):.2f}" for c in cuts], fontsize=7.5, color=INK)
+top.set_xticks(np.log(cuts), [f"${v}" for v in LINES_USD], fontsize=7.5, color=INK)
 top.tick_params(length=3, color=INK, pad=2)
 top.spines["top"].set_visible(False)
 ticks = [1, 2, 5, 10, 20, 50, 100]
@@ -218,21 +225,42 @@ hgrid(ax)
 svg_dist = save(fig, "classes_distribution")
 
 # main earner's share of household income, by class (for the text)
-g = d.groupby("class_A")
+g = d.groupby("cls")
 main_share = np.array([wmean(gg.income_main_earner_month, gg.weight) / wmean(gg.income_full, gg.weight) * 100 for _, gg in g])
 
 # ---- HTML
 def rng(k, f):
     return f"below {f(cuts[0])}" if k == 0 else f"above {f(cuts[-1])}" if k == 4 else f"{f(cuts[k - 1])}–{f(cuts[k])}"
 
-rows = [[NAMES[k], rng(k, lambda v: "$" + fmt2(day_usd(v))),
+rows = [[NAMES[k], rng(k, lambda v: f"${day_usd(v):.0f}"),
          fmt1(share[k]), fmt1(hh_m[k]), fmt1(size_k[k])] for k in range(5)]
 rows.append(["All households", "", "100.0", fmt1(N_HH / 1e6), fmt1(N_POP / N_HH)])
 class_table = table("<b>Table 1.</b> The five classes, by spending per person per day (2023 PPP dollars)",
                     ["Class", "$ per person per day", "% of households", "Households (million)", "People per household"],
                     rows, total_last=True,
-                    note=f"2023 PPP dollars per person per day (step 2). "
+                    note=f"2023 PPP dollars per person per day (step 2); lines rounded from the K-means thresholds (step 5). "
                          f"Source: author's calculations from HIES 2024-25 (PBS), household-weighted.").replace('<div class="tbl">', '<div class="tbl nowrap">')
+
+# ---- durable goods: % of households in each class owning at least one
+# only the items that Ghani (2014, KSBL Working Paper 2014-11, Figures 19-20 and appendix table) also reports, so the two can be compared
+DUR = [("Mobile phone", ["n_own_mobile"]), ("Electric fan", ["own_fan"]), ("Television", ["own_television", "own_lcd_led"]),
+       ("Sewing machine", ["own_sewing_machine"]), ("Washing machine", ["own_washing_machine"]),
+       ("Refrigerator or freezer", ["own_refrigerator", "own_freezer"]), ("Motorcycle or scooter", ["own_motorcycle", "own_scooter"]),
+       ("Air cooler", ["own_air_cooler"]), ("Air conditioner", ["own_air_conditioner"]), ("Car", ["own_car"]),
+       ("Tractor", ["own_tractor_trolley"])]
+OWN = {}
+dur_rows = []
+for lab, cols in DUR:
+    if cols is None:
+        dur_rows.append([f"<i>{lab}</i>"] + [""] * 6)
+        continue
+    has = d[cols].fillna(0).sum(axis=1) > 0
+    OWN[lab] = [W[has & (d.cls == k)].sum() / W[d.cls == k].sum() * 100 for k in range(1, 6)] + [W[has].sum() / N_HH * 100]
+    dur_rows.append([lab] + [fmt0(v) for v in OWN[lab][:5]] + [f"<b>{fmt0(OWN[lab][5])}</b>"])
+dur_table = table("<b>Table 3.</b> Ownership of durable goods by class (% of households owning at least one)",
+                  ["Item"] + NAMES + ["All"], dur_rows,
+                  note="The durables also reported by Ghani (2014) for PSLM 2010-11; his computer item is left out because HIES 2024-25 records only computer use. Mobile phone: at least one member owns one (Section 2C); other items: owned now (Section 7). "
+                       "Source: HIES 2024-25, household-weighted.").replace('<div class="tbl">', '<div class="tbl nowrap">')
 
 # ---- imputed (non-cash) consumption by class: owned-home rent, own produce, wages in kind, gifts in kind
 d["imp_rent"] = d.exp_imputed_rent
@@ -240,14 +268,14 @@ d["imp_food"] = d.inkind_own_production - d.exp_imputed_rent      # v3 includes 
 d["imp_all"] = d.imp_rent + d.imp_food + d.inkind_wages + d.inkind_gifts
 IMP = ["imp_rent", "imp_food", "inkind_wages", "inkind_gifts", "imp_all"]
 imp_rows = []
-for k, g in [(k, d[d.class_A == k]) for k in range(1, 6)] + [(0, d)]:
+for k, g in [(k, d[d.cls == k]) for k in range(1, 6)] + [(0, d)]:
     tot = (g.exp_total * g.weight).sum()
     pct = [(g[v] * g.weight).sum() / tot * 100 for v in IMP]
     imp_rows.append([NAMES[k - 1] if k else "All households"] + [fmt1(p) for p in pct[:-1]] + [f"<b>{fmt1(pct[-1])}</b>", "$" + fmt2(day_usd(wmean(g.imp_all / g.hhsize, g.weight)))])
 imp_share = (d.imp_all * W).sum() / (d.exp_total * W).sum() * 100
 cash_class = np.searchsorted(cuts, (d.exp_total - d.imp_all) / d.hhsize, side="right") + 1
 cash_share = np.array([W[cash_class == k].sum() for k in range(1, 6)]) / N_HH * 100
-cash_same = W[cash_class == d.class_A].sum() / N_HH * 100
+cash_same = W[cash_class == d.cls].sum() / N_HH * 100
 imp_table = table("<b>Table 2.</b> Imputed (non-cash) consumption, % of each class's spending",
                   ["Class", "Home rent", "Own produce", "Wages", "Gifts", "Total", "$ per person per day"],
                   imp_rows, total_last=True,
@@ -271,15 +299,15 @@ for area in ["urban", "rural"]:
     AREA[area] = dict(
         n=len(g), hh=gw.sum() / 1e6, cuts=ac,
         own=np.array([gw[own == k].sum() for k in range(1, 6)]) / gw.sum() * 100,
-        nat=np.array([gw[g.class_A == k].sum() for k in range(1, 6)]) / gw.sum() * 100,
-        same=gw[own == g.class_A].sum() / gw.sum() * 100,
-        near=gw[np.abs(own - g.class_A) <= 1].sum() / gw.sum() * 100)
+        nat=np.array([gw[g.cls == k].sum() for k in range(1, 6)]) / gw.sum() * 100,
+        same=gw[own == g.cls].sum() / gw.sum() * 100,
+        near=gw[np.abs(own - g.cls) <= 1].sum() / gw.sum() * 100)
 U, R = AREA["urban"], AREA["rural"]
 ur_ratio = U["cuts"] / R["cuts"]
 cell = lambda v: f"${day_usd(v):.2f}"
-area_table = table("<b>Table 3.</b> Class thresholds when each area is classified on its own (2023 PPP $ per person per day)",
-                   ["Threshold", "National", "Urban only", "Rural only", "Urban ÷ rural"],
-                   [[f"{NAMES[i]} | {NAMES[i + 1]}", cell(cuts[i]), cell(U["cuts"][i]), cell(R["cuts"][i]), f"{ur_ratio[i]:.2f}"] for i in range(4)],
+area_table = table("<b>Table 4.</b> Class thresholds when each area is classified on its own (2023 PPP $ per person per day)",
+                   ["Threshold", "Class line", "K-means: national", "urban only", "rural only", "Urban ÷ rural"],
+                   [[f"{NAMES[i]} | {NAMES[i + 1]}", f"${LINES_USD[i]}", cell(cuts_km[i]), cell(U["cuts"][i]), cell(R["cuts"][i]), f"{ur_ratio[i]:.2f}"] for i in range(4)],
                    note=f"Urban: {U['n']:,} sampled households ({U['hh']:.1f} million); rural: {R['n']:,} ({R['hh']:.1f} million). Same K-means method as steps 3–4, weighted by the household weight.").replace('<div class="tbl">', '<div class="tbl nowrap">')
 
 # Figure 2: one 100% bar per area, split into the five classes (same colours as Figure 1).
@@ -299,8 +327,8 @@ for y, (lab, vals) in zip(ypos, BARS):
             ax.text(101, y, f"{v:.0f}%", ha="left", va="center", fontsize=7.2, color=INK, fontweight="bold")
         left += v
     ax.text(-1.5, y, lab, ha="right", va="center", fontsize=8, color=INK)
-ax.text(0, 5.05, "A.  Same thresholds for everyone: " + ", ".join(f"\\${day_usd(c):.2f}" for c in cuts) + " (Table 1)", fontsize=8, color=INK, fontweight="bold", va="bottom")
-ax.text(0, 2.15, "B.  Own thresholds for each area: urban " + ", ".join(f"\\${day_usd(c):.2f}" for c in U["cuts"]) + ";  rural " + ", ".join(f"\\${day_usd(c):.2f}" for c in R["cuts"]), fontsize=8, color=INK, fontweight="bold", va="bottom")
+ax.text(0, 5.05, "A.  Same class lines for everyone: " + ", ".join(f"\\${v}" for v in LINES_USD) + " (Table 1)", fontsize=8, color=INK, fontweight="bold", va="bottom")
+ax.text(0, 2.15, "B.  Own K-means thresholds for each area: urban " + ", ".join(f"\\${day_usd(c):.2f}" for c in U["cuts"]) + ";  rural " + ", ".join(f"\\${day_usd(c):.2f}" for c in R["cuts"]), fontsize=8, color=INK, fontweight="bold", va="bottom")
 ax.set_xlim(0, 105); ax.set_ylim(0, 5.6)
 ax.set_yticks([]); ax.set_xticks([])
 for sp in ax.spines.values():
@@ -315,12 +343,12 @@ IMP_AREA = {}
 area_imp_rows = []
 for lab, g in [("Urban", d[d.region == "urban"]), ("Rural", d[d.region == "rural"]), ("All households", d)]:
     pct = [imp_pct(g, v) for v in IMP]
-    IMP_AREA[lab] = dict(pct=pct, by_class=[imp_pct(g[g.class_A == k], "imp_all") for k in range(1, 6)])
+    IMP_AREA[lab] = dict(pct=pct, by_class=[imp_pct(g[g.cls == k], "imp_all") for k in range(1, 6)])
     area_imp_rows.append([lab] + [fmt1(p) for p in pct[:-1]] + [f"<b>{fmt1(pct[-1])}</b>",
                          "$" + fmt2(day_usd(wmean(g.imp_all / g.hhsize, g.weight))),
                          fmt0(g.weight[g.imp_rent > 0].sum() / g.weight.sum() * 100),
                          fmt0(g.weight[g.imp_food > 0].sum() / g.weight.sum() * 100)])
-area_imp_table = table("<b>Table 4.</b> Imputed (non-cash) consumption in urban and rural households (% of spending, unless stated)",
+area_imp_table = table("<b>Table 5.</b> Imputed (non-cash) consumption in urban and rural households (% of spending, unless stated)",
                        ["Area", "Home rent", "Own produce", "Wages", "Gifts", "Total", "$ per person per day", "% of households: with home rent", "with own produce"],
                        area_imp_rows, total_last=True,
                        note="Same definitions as Table 2. Source: HIES 2024-25, Section 6A; household-weighted.").replace('<div class="tbl">', '<div class="tbl nowrap">')
@@ -344,9 +372,9 @@ body1 = f"""
   <div><b>Date</b>November 2026</div>
 </div>
 <div class="summary"><h2>Summary</h2><ul>
-  <li>Households are ranked by spending <b>per person</b> and divided into five classes by K-means clustering.</li>
-  <li>The thresholds are <b>${day_usd(cuts[0]):.2f}, ${day_usd(cuts[1]):.2f}, ${day_usd(cuts[2]):.2f} and ${day_usd(cuts[3]):.2f}</b> per person per day, in 2023 PPP dollars.</li>
+  <li>Households are ranked by spending <b>per person</b> and divided into five classes at <b>$3, $6, $10 and $20</b> per person per day, in 2023 PPP dollars. These lines are the K-means thresholds rounded.</li>
   <li>{share[1] + share[2]:.0f}% of households are lower-middle or middle class; {share[4]:.1f}% ({hh_m[4]:.1f} million households) are upper class.</li>
+  <li>Ownership rises steeply with class: {OWN["Car"][4]:.0f}% of upper-class households own a car and {OWN["Air conditioner"][4]:.0f}% an air conditioner, against {OWN["Car"][2]:.0f}% and {OWN["Air conditioner"][2]:.0f}% in the middle class.</li>
 </ul></div>
 
 <h2><span class="n">1</span>How the classes are made</h2>
@@ -354,41 +382,51 @@ body1 = f"""
   <li><b>Add up each household's spending for one month.</b> This includes everything the household consumed: what it bought, food it grew itself, the rent value of a house it owns, and goods received as wages or gifts. Items asked about over 14 days or 12 months are converted to one month.</li>
   <li><b>Convert to dollars per person per day.</b> Divide by the number of household members, so a large family is not ranked as rich just because it spends more in total; then by 30.4 days and by Rs {RS_PER_USD23:.2f}, the value of one 2023 PPP dollar at 2024-25 prices (the World Bank’s 2023 PPP rate for household consumption, Rs {PPP_2023:.2f}, raised by the {(CPI_HIES / CPI_2023 - 1) * 100:.1f}% price rise to 2024-25).</li>
   <li><b>Let K-means find five groups.</b> K-means places five centres along the spending scale and puts every household, counted with its weight, with its nearest centre. Spending is compared on a ratio scale, so “twice as much” is the same step for poor and rich.</li>
-  <li><b>Read off the thresholds.</b> The boundary between two neighbouring classes lies halfway between their centres on that ratio scale. This is the square root of the two centres multiplied together: for example √({day_usd(np.exp(centres[0])):.2f} × {day_usd(np.exp(centres[1])):.2f}) = <b>${day_usd(cuts[0]):.2f}</b>.</li>
+  <li><b>Read off the thresholds.</b> The boundary between two neighbouring classes lies halfway between their centres on that ratio scale. This is the square root of the two centres multiplied together: for example √({day_usd(np.exp(centres[0])):.2f} × {day_usd(np.exp(centres[1])):.2f}) = ${day_usd(cuts_km[0]):.2f}. The four K-means thresholds are {", ".join("$" + fmt2(day_usd(c)) for c in cuts_km)}.</li>
+  <li><b>Round them to fixed class lines: ${", $".join(str(v) for v in LINES_USD)}.</b> Round lines are easier to use and, being fixed in 2023 dollars, can be applied unchanged to other survey rounds. {km_same:.0f}% of households are in the same class as under the exact K-means thresholds.</li>
   <li><b>Count the households in each class</b> by adding up their weights.</li>
 </ol>
 
-<h2><span class="n">2</span>Results</h2>
-{class_table}
-{figure("<b>Figure 1.</b> Households by spending per person, with the class thresholds", svg_dist,
-        "Dashed lines: thresholds, in 2023 PPP $ per person per day. The distribution has one peak and no natural gaps; unlike quintiles, the classes give a large middle and a small upper class. Source: HIES 2024-25, household-weighted.")}
-
-<h2><span class="n">3</span>Checks</h2>
+<h2><span class="n">2</span>Checks</h2>
 <ul>
-  <li><b>Same result every time.</b> K-means is run from 50 random starts and gives the same classes; the thresholds in Table 1 reproduce {reproduced:.0f}% of them.</li>
-  <li><b>Income gives the same picture.</b> Classes by income per person have similar thresholds ({", ".join("$" + fmt2(day_usd(c)) for c in cuts_c)}); {same:.0f}% of households keep their class, {near:.0f}% stay within one class.</li>  <li><b>Totals match the official report.</b> Average household spending and income are within {max(spend_avg / 79150, inc_avg / 82179) * 100 - 100:.0f}% of the PBS HIES 2024-25 report ({spend_avg / 79150 * 100 - 100:.1f}% and {inc_avg / 82179 * 100 - 100:.1f}% higher).</li>
+  <li><b>Same result every time.</b> K-means is run from 50 random starts and gives the same classes; its thresholds reproduce {reproduced:.0f}% of them, and the rounded lines keep {km_same:.0f}% of households in the same class.</li>
+  <li><b>Income gives the same picture.</b> Ranked by income per person with the same lines, {same:.0f}% of households keep their class and {near:.0f}% stay within one class.</li>  <li><b>Totals match the official report.</b> Average household spending and income are within {max(spend_avg / 79150, inc_avg / 82179) * 100 - 100:.0f}% of the PBS HIES 2024-25 report ({spend_avg / 79150 * 100 - 100:.1f}% and {inc_avg / 82179 * 100 - 100:.1f}% higher).</li>
 </ul>
 
-<h2><span class="n">4</span>Reading the thresholds</h2>
+<h2><span class="n">3</span>Results</h2>
+{class_table}
+{figure("<b>Figure 1.</b> Households by spending per person, with the class thresholds", svg_dist,
+        "Dashed lines: class lines, in 2023 PPP $ per person per day. The distribution has one peak and no natural gaps; unlike quintiles, the classes give a large middle and a small upper class. Source: HIES 2024-25, household-weighted.")}
+
+<h2><span class="n">4</span>Reading the class lines</h2>
 <ul>
-  <li><b>They are spending per person, not salaries.</b> A family of six is upper class only if it spends more than 6 × ${day_usd(cuts[3]):.2f} = ${6 * day_usd(cuts[3]):.0f} a day. One earner on $20 a day supporting six people gives ${20 / 6:.2f} per person: lower class. The main earner provides only {main_share.min():.0f}–{main_share.max():.0f}% of household income.</li>
+  <li><b>They are spending per person, not salaries.</b> A family of six is upper class only if it spends more than 6 × ${LINES_USD[3]} = ${6 * LINES_USD[3]} a day. One earner on $15 a day supporting six people gives $2.50 per person: lower class. The main earner provides only {main_share.min():.0f}–{main_share.max():.0f}% of household income.</li>
   <li><b>Spending includes imputed consumption</b> (Table 2): {imp_share:.1f}% of household spending is not paid in cash. Poorer classes rely more on own produce and gifts, the upper class on the rental value of its homes. With cash spending only and the same thresholds, the lower class would be {cash_share[0]:.0f}% of households instead of {share[0]:.0f}%, the upper class {cash_share[4]:.1f}% instead of {share[4]:.1f}%, and only {cash_same:.0f}% of households would keep their class.</li>
-  <li><b>Limits.</b> Spending is not wealth, prices differ between regions, and the K-means thresholds apply to this survey round only; for comparisons over time, hold the 2023 PPP dollar thresholds fixed. The $2/$4/$6 lines of the Middle and Affluent Class analysis are in 2011 PPP dollars and not directly comparable.</li>
+  <li><b>Limits.</b> Spending is not wealth and prices differ between regions. K-means thresholds would move with each survey round; the fixed lines do not, so they can be used for comparisons over time after converting each round's spending to 2023 PPP dollars. The $2/$4/$6 lines of the Middle and Affluent Class analysis are in 2011 PPP dollars and not directly comparable.</li>
 </ul>
 {imp_table}
 
-<h2 style="break-before: page; margin-top: 0"><span class="n">5</span>Urban and rural households classified separately</h2>
-<p>Steps 1–5 were repeated separately for urban and for rural households (Table 3).</p>
+<h2><span class="n">5</span>What each class owns</h2>
+{dur_table}
+<ul>
+  <li><b>A mobile phone and an electric fan are near-universal</b>: {OWN["Mobile phone"][0]:.0f}% and {OWN["Electric fan"][0]:.0f}% of households own them even in the lower class.</li>
+  <li><b>A refrigerator, washing machine and television mark the middle class</b>: each is owned by {min(OWN[i][2] for i in ["Refrigerator or freezer", "Washing machine", "Television"]):.0f}–{max(OWN[i][2] for i in ["Refrigerator or freezer", "Washing machine", "Television"]):.0f}% of middle-class households but only {min(OWN[i][0] for i in ["Refrigerator or freezer", "Washing machine", "Television"]):.0f}–{max(OWN[i][0] for i in ["Refrigerator or freezer", "Washing machine", "Television"]):.0f}% of lower-class ones.</li>
+  <li><b>A car and an air conditioner mark the top</b>: {OWN["Car"][4]:.0f}% and {OWN["Air conditioner"][4]:.0f}% of upper-class households own them, against {OWN["Car"][2]:.0f}% and {OWN["Air conditioner"][2]:.0f}% of the middle class. Ghani (2014) found the same ladder in 2010-11: fan, mobile and TV, then washing machine and fridge, then motorcycle, then car and AC.</li>
+  <li><b>Not everything rises with class:</b> sewing machines and motorcycles level off above the middle class, and tractors are rare in every class (at most {max(OWN["Tractor"][:5]):.0f}%).</li>
+</ul>
+
+<h2 style="break-before: page; margin-top: 0"><span class="n">6</span>Urban and rural households classified separately</h2>
+<p>Steps 1–4 (K-means) were repeated separately for urban and for rural households (Table 4).</p>
 {area_table}
 {figure("<b>Figure 2.</b> How urban and rural households divide into the five classes (% of households in the area)", svg_area,
         "Each bar = 100% of the area’s households; thresholds in 2023 PPP $ per person per day. A: Table 1 classes split by area. B: each area ranked against itself. Source: HIES 2024-25, household-weighted.")}
 <ul>
   <li><b>Compared with all of Pakistan (A), the areas differ.</b> City households spend more, so they sit higher: {U["nat"][4]:.1f}% of urban households are upper class against {R["nat"][4]:.1f}% of rural ones, and {R["nat"][0]:.0f}% of rural households are lower class against {U["nat"][0]:.1f}% of urban ones.</li>
-  <li><b>Compared only with their own area (B), they split the same way,</b> close to the national {" / ".join(f"{v:.0f}" for v in share)}%. Inequality within cities and within villages has the same shape; only the level differs. Urban thresholds are {ur_ratio[0]:.1f} times the rural ones at the bottom and {ur_ratio[-1]:.1f} times at the top, so higher urban prices alone cannot explain the gap.</li>
+  <li><b>Compared only with their own area (B), they split the same way,</b> close to the national K-means split of {" / ".join(f"{v:.0f}" for v in share_km)}%. Inequality within cities and within villages has the same shape; only the level differs. Urban thresholds are {ur_ratio[0]:.1f} times the rural ones at the bottom and {ur_ratio[-1]:.1f} times at the top, so higher urban prices alone cannot explain the gap.</li>
   <li><b>Which to use.</b> HIES has no regional price index, so part of the gap is the higher urban cost of living. Use A for a Pakistan-wide picture and B to compare households with their neighbours.</li>
 </ul>
 {area_imp_table}
-<p><b>Overall, imputed consumption is {IR["pct"][-1]:.1f}% of rural and {IU["pct"][-1]:.1f}% of urban household spending</b> ({IMP_AREA["All households"]["pct"][-1]:.1f}% for all households). In rural areas it is mostly own produce and stays at {min(IR["by_class"]):.0f}–{max(IR["by_class"]):.0f}% in every class: richer rural households grow less of their food but own more valuable homes. In cities it is mostly the rental value of owned homes and rises from {IU["by_class"][0]:.0f}% in the lower class to {IU["by_class"][4]:.0f}% in the upper class (national classes).</p>
+<p><b>Overall, imputed consumption is {IR["pct"][-1]:.1f}% of rural and {IU["pct"][-1]:.1f}% of urban household spending</b> ({IMP_AREA["All households"]["pct"][-1]:.1f}% for all households). In rural areas it is mostly own produce and stays at {min(IR["by_class"]):.0f}–{max(IR["by_class"]):.0f}% in every class: richer rural households grow less of their food but own more valuable homes. In cities it is mostly the rental value of owned homes and rises from {IU["by_class"][0]:.0f}% in the lower class to {IU["by_class"][4]:.0f}% in the upper class (Table 1 classes).</p>
 """
 to_pdf(page("Consumption-Based Social Classes in Pakistan", "Consumption-Based Social Classes in Pakistan", "Methodology note", body1),
        "classes.html", WORK / "1_social_classes/HOW_CLASSES_ARE_DEFINED.pdf")
